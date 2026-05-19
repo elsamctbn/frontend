@@ -1,7 +1,30 @@
 import Navbar from '../../components/layout/Navbar'
 import Footer from '../../components/layout/Footer'
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 const Login = () => {
+  const navigate = useNavigate()
+  
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleLogin = () => {
+    if(!email.endsWith('@gmail.com')) {
+      alert(
+        'Email harus menggunakan @gmail.com'
+      )
+      return
+    }
+
+  localStorage.setItem(
+    'login',
+    'true'
+  )
+
+  alert('login berhasil')
+  navigate('/search')
+}
   return (
     <div className='bg-slate-100 min-h-screen'>
 
@@ -17,21 +40,36 @@ const Login = () => {
 
           <div className='space-y-5'>
 
+          <form className='space-y-5'>
             <input
               type='email'
+              name='email'
+              value={email}
+              onChange={(e) =>
+                setEmail(e.target.value)
+              }
               placeholder='Email'
               className='w-full border p-4 rounded-2xl'
             />
 
             <input
               type='password'
+              name='password'
+              value={password}
+              onChange={(e) =>
+                setPassword(e.target.value)
+              }
               placeholder='Password'
               className='w-full border p-4 rounded-2xl'
             />
 
-            <button className='w-full bg-purple-700 text-white py-4 rounded-2xl font-bold hover:bg-purple-800 transition'>
+            <button
+              onClick={handleLogin}
+              className='w-full bg-purple-700 text-white py-4 rounded-2xl font-bold hover:bg-purple-800 transition'
+            >
               Login
-            </button>
+              </button>   
+            </form>
 
           </div>
 

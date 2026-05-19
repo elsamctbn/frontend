@@ -288,11 +288,6 @@ const Home = () => {
                   Gunakan kartu pelajar atau KTM
                   untuk mendapatkan potongan harga perjalanan.
                 </p>
-
-                <button className='mt-8 bg-white text-purple-700 font-bold px-5 py-3 rounded-2xl hover:bg-purple-100 transition'>
-                  Klaim Promo
-                </button>
-
               </div>
 
               <div className='w-[320px] bg-gradient-to-br from-indigo-700 to-blue-500 rounded-[35px] p-8 text-white shadow-2xl hover:-translate-y-3 hover:shadow-blue-500/40 transition duration-500'>
