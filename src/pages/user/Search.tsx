@@ -203,19 +203,6 @@ export default function Search() {
                     E-Mail
                   </label>
 
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) =>
-                      setEmail(
-                        e.target.value
-                      )
-                    }
-                    placeholder="Masukkan email"
-                    className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
-                  />
-                </div>
-
                 <div>
                   <label className="block mb-2 font-medium">
                     Nomor Telepon
