@@ -1,5 +1,6 @@
 import Navbar from '../../components/layout/Navbar'
 import Footer from '../../components/layout/Footer'
+import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
@@ -10,6 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState('')
 
   const handleLogin = () => {
+      e.preventDefault()
     if(!email.endsWith('@gmail.com')) {
       alert(
         'Email harus menggunakan @gmail.com'
@@ -17,13 +19,26 @@ const Login = () => {
       return
     }
 
-  localStorage.setItem(
-    'login',
-    'true'
-  )
+    const user = JSON.parse(
+     localStorage.getItem('user')
+    )
 
-  alert('login berhasil')
-  navigate('/search')
+    if (
+      user &&
+      email === user.email &&
+      password === user.password
+    ) {
+      localStorage.setItem(
+            'login',
+            'true'
+        )
+
+      alert('login berhasil')
+      navigate('/search')
+    } else {
+      alert('Email atau password salah')
+    }
+
 }
   return (
     <div className='bg-slate-100 min-h-screen'>
@@ -65,12 +80,17 @@ const Login = () => {
 
             <button
               onClick={handleLogin}
-              className='w-full bg-purple-700 text-white py-4 rounded-2xl font-bold hover:bg-purple-800 transition'
-            >
+              className='w-full bg-purple-700 text-white py-4 rounded-2xl font-bold hover:bg-purple-800 transition'>
               Login
-              </button>   
-            </form>
+              </button> 
 
+              <Link
+                  to="/register"
+                  className="block text-center mt-4 font-semibold">
+                  Belum punya akun? Daftar
+              </Link>
+              
+            </form>
           </div>
 
         </div>

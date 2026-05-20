@@ -4,8 +4,8 @@ import logo from '../../assets/logo.png'
 
 const Navbar = () => {
   return (
-    <nav className="bg-[#6F1AB6] text-white px-6 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
-      <div className="flex items-center gap-4">
+    <nav className="bg-[#6F1AB6] text-white px-9 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
+      <div className="flex items-center ]">
         <img
           src={logo}
           alt="Eldivo Logo"

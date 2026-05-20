@@ -1,17 +1,17 @@
+
 import { useState } from 'react'
 import {
   Link,
   useNavigate,
 } from 'react-router-dom'
 
-
-import logo from '../../assets/logo.png'
+import Navbar from '../../components/layout/Navbar'
 
 export default function Search() {
 
  const navigate = useNavigate()
 
-  const isLogin =
+ const isLogin =
     localStorage.getItem('login') === 'true'
 
   const [showModal, setShowModal] =
@@ -79,41 +79,7 @@ export default function Search() {
   return (
 
     <div className="min-h-screen bg-[#f3f4f6]">
-
-      {/* NAVBAR */}
-      <nav className="bg-[#6A1FB5] px-8 py-4 flex items-center justify-between shadow-md">
-
-        <img
-          src={logo}
-          alt="logo"
-          className="h-12"
-        />
-
-        <div className="flex items-center gap-10 text-white font-semibold text-xl">
-
-          <Link to="/">
-            Home
-          </Link>
-
-          <Link
-            to="/search"
-            className="font-bold"
-          >
-            Pesan
-          </Link>
-
-          <Link to="/ticket">
-            Tiket Saya
-          </Link>
-
-          <Link to="/profile">
-            Profil
-          </Link>
-
-        </div>
-
-      </nav>
-
+      <Navbar/>
       {/* CONTENT */}
       <div className="max-w-5xl-auto py-10 px-6">
         <div className="space-y-6">
@@ -138,7 +104,7 @@ export default function Search() {
               </div>
 
               {/* ISI CARD */}
-              <div className="grid grid-cols-2 items-center gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
                 {/* KIRI */}
                 <div className="flex items-center gap-10 flex-1">
 
@@ -334,6 +300,245 @@ export default function Search() {
 
       )}
 
+      {/* MODAL PILIH KURSI */}
+{showSeatModal && (
+
+  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+
+    <div className="bg-white w-[500px] max-h-[90vh] overflow-auto rounded-3xl p-6 shadow-2xl relative">
+
+      {/* HEADER */}
+      <div className="flex justify-between items-center mb-0">
+
+        <button
+          onClick={() =>
+            setShowSeatModal(false)
+          }
+          className="text-2xl font-bold"
+        >
+          ✕
+        </button>
+
+      </div>
+
+      {/* SUPIR */}
+      <div className="flex justify-end mb-6">
+
+        <div className="border px-4 py-2 rounded-lg font-bold">
+          Supir
+        </div>
+
+      </div>
+
+      {/* PINTU DEPAN */}
+      <div className="mb-5">
+
+        <div className="border inline-block px-4 py-2 rounded-lg font-bold">
+          Pintu Depan
+        </div>
+
+      </div>
+
+      {/* KURSI */}
+      <div className="space-y-4">
+
+        {[
+          [
+            'A5',
+            'A4',
+            '',
+            'A3',
+            'A2',
+            'A1',
+          ],
+
+          [
+            'B5',
+            'B4',
+            '',
+            'B3',
+            'B2',
+            'B1',
+          ],
+
+          [
+            'C5',
+            'C4',
+            '',
+            'C3',
+            'C2',
+            'C1',
+          ],
+
+          [
+            'D5',
+            'D4',
+            '',
+            'D3',
+            'D2',
+            'D1',
+          ],
+
+          [
+            'E5',
+            'E4',
+            '',
+            'E3',
+            'E2',
+            'E1',
+          ],
+
+          [
+            'F5',
+            'F4',
+            '',
+            'F3',
+            'F2',
+            'F1',
+          ],
+        ].map((row, index) => (
+
+          <div
+            key={index}
+            className="grid grid-cols-6 gap-4"
+          >
+
+            {row.map((seat, i) =>
+
+              seat === '' ? (
+                <div key={i}></div>
+              ) : (
+
+                <button
+                  key={i}
+                  onClick={() =>
+                    setSelectedSeat(seat)
+                  }
+                  className={`border rounded-lg py-2 font-bold transition
+
+                  ${
+                    selectedSeat === seat
+                      ? 'bg-[#7B2CBF] text-white border-[#7B2CBF]'
+                      : 'hover:bg-gray-100'
+                  }`}
+                >
+
+                  {seat}
+
+                </button>
+
+              )
+
+            )}
+
+          </div>
+
+        ))}
+
+        {/* PINTU BELAKANG */}
+        <div className="pt-4">
+
+          <div className="border inline-block px-4 py-2 rounded-lg font-bold">
+            Pintu Belakang
+          </div>
+
+        </div>
+
+        {/* BARIS H */}
+        <div className="grid grid-cols-6 gap-4 pt-2">
+
+          {[
+            'H5',
+            'H4',
+            '',
+            'H3',
+            'H2',
+            'H1',
+          ].map((seat, i) =>
+
+            seat === '' ? (
+              <div key={i}></div>
+            ) : (
+
+              <button
+                key={i}
+                onClick={() =>
+                  setSelectedSeat(seat)
+                }
+                className={`border rounded-lg py-2 font-bold transition
+
+                ${
+                  selectedSeat === seat
+                    ? 'bg-[#7B2CBF] text-white border-[#7B2CBF]'
+                    : 'hover:bg-gray-100'
+                }`}
+              >
+
+                {seat}
+
+              </button>
+
+            )
+
+          )}
+
+        </div>
+
+        {/* BARIS I */}
+        <div className="grid grid-cols-6 gap-4">
+
+          {[
+            'I6',
+            'I5',
+            'I4',
+            'I3',
+            'I2',
+            'I1',
+          ].map((seat, i) => (
+
+            <button
+              key={i}
+              onClick={() =>
+                setSelectedSeat(seat)
+              }
+              className={`border rounded-lg py-2 font-bold transition
+
+              ${
+                selectedSeat === seat
+                  ? 'bg-[#7B2CBF] text-white border-[#7B2CBF]'
+                  : 'hover:bg-gray-100'
+              }`}
+            >
+
+              {seat}
+
+            </button>
+
+          ))}
+
+        </div>
+
+      </div>
+
+      {/* BUTTON PILIH */}
+      <div className="flex justify-center mt-10">
+
+        <button
+          onClick={() =>
+            setShowSeatModal(false)
+          }
+          className="bg-[#7B2CBF] hover:bg-[#6A1FB5] transition text-white px-10 py-3 rounded-xl text-xl font-bold"
+        >
+          Pilih
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+)}
     </div>
   )
 }

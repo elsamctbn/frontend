@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-
-import logo from '../../assets/logo.png'
+import Navbar from '../../components/layout/Navbar'
 
 export default function Profile() {
 
@@ -47,34 +45,7 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-[#f3f4f6]">
-      <nav className="bg-[#6A1FB5] px-8 py-4 flex items-center justify-between">
-
-        <img
-          src={logo}
-          alt="logo"
-          className="h-12"
-        />
-
-        <div className="flex items-center gap-10 text-white text-2xl font-semibold">
-
-          <Link to="/">Home</Link>
-
-          <Link to="/search">
-            Pesan
-          </Link>
-
-          <Link to="/ticketsaya">
-            Tiket Saya
-          </Link>
-
-          <Link
-            to="/profile"
-            className="font-bold"
-          >
-            Profil
-          </Link>
-        </div>
-      </nav>
+      <Navbar/>
 
       <div className="flex justify-center py-20 px-4">
 

@@ -1,6 +1,5 @@
 import {
   useLocation,
-  Link,
   useNavigate,
 } from 'react-router-dom'
 
@@ -9,7 +8,7 @@ import {
   useEffect,
 } from 'react'
 
-import logo from '../../assets/logo.png'
+import Navbar from '../../components/layout/Navbar'
 
 export default function Payment() {
 
@@ -105,57 +104,7 @@ export default function Payment() {
   return (
 
     <div className="min-h-screen bg-[#f3f4f6]">
-
-      <nav
-        className="
-          bg-[#6A1FB5]
-          px-8
-          py-4
-          flex
-          items-center
-          justify-between
-          shadow-md
-        "
-      >
-
-        <img
-          src={logo}
-          alt="logo"
-          className="h-12"
-        />
-
-        <div
-          className="
-            flex
-            items-center
-            gap-10
-            text-white
-            font-semibold
-            text-xl
-          "
-        >
-
-          <Link to="/">
-            Home
-          </Link>
-
-          <Link
-            to="/search"
-            className="font-bold"
-          >
-            Pesan
-          </Link>
-
-          <Link to="/ticket">
-            Tiket Saya
-          </Link>
-
-          <Link to="/profile">
-            Profil
-          </Link>
-        </div>
-      </nav>
-
+    <Navbar/>
       <div
         className="
           max-w-5xl
