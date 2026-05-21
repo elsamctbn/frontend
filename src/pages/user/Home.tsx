@@ -305,11 +305,6 @@ const Home = () => {
                   Nikmati cashback spesial untuk
                   pembayaran menggunakan QRIS dan E-Wallet.
                 </p>
-
-                <button className='mt-8 bg-white text-blue-700 font-bold px-5 py-3 rounded-2xl hover:bg-blue-100 transition'>
-                  Lihat Promo
-                </button>
-
               </div>
 
               <div className='w-[320px] bg-gradient-to-br from-pink-600 to-rose-500 rounded-[35px] p-8 text-white shadow-2xl hover:-translate-y-3 hover:shadow-pink-500/40 transition duration-500'>
@@ -330,11 +325,6 @@ const Home = () => {
                   Dapatkan harga spesial untuk
                   perjalanan akhir pekan bersama Eldivo.
                 </p>
-
-                <button className='mt-8 bg-white text-pink-700 font-bold px-5 py-3 rounded-2xl hover:bg-pink-100 transition'>
-                  Pesan Sekarang
-                </button>
-
               </div>
 
               <div className='w-[320px] bg-gradient-to-br from-amber-500 to-orange-500 rounded-[35px] p-8 text-white shadow-2xl hover:-translate-y-3 hover:shadow-orange-500/40 transition duration-500'>
@@ -356,11 +346,6 @@ const Home = () => {
                   untuk petualangan pertamamu
                   bersama Eldivo.
                 </p>
-
-                <button className='mt-8 bg-white text-orange-600 font-bold px-5 py-3 rounded-2xl hover:bg-orange-100 transition'>
-                  Daftar Sekarang
-                </button>
-
               </div>
 
             </div>

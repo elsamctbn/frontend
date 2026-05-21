@@ -28,10 +28,8 @@ const Login = () => {
       email === user.email &&
       password === user.password
     ) {
-      localStorage.setItem(
-            'login',
-            'true'
-        )
+      localStorage.setItem("login", "true")
+      localStorage.setItem("activeUser", JSON.stringify(user))
 
       alert('login berhasil')
       navigate('/search')

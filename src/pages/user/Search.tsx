@@ -1,7 +1,5 @@
-
 import { useState } from 'react'
 import {
-  Link,
   useNavigate,
 } from 'react-router-dom'
 
@@ -64,6 +62,7 @@ export default function Search() {
   ]
 
   const handleNext = () => {
+  const activeUser = JSON.parse(localStorage.getItem("activeUser"))
 
     navigate('/payment', {
       state: {
@@ -72,6 +71,7 @@ export default function Search() {
         telepon,
         tanggalLahir,
         kursi: selectedSeat,
+        email: activeUser.email,
       },
     })
   }
@@ -80,17 +80,17 @@ export default function Search() {
 
     <div className="min-h-screen bg-[#f3f4f6]">
       <Navbar/>
+
       {/* CONTENT */}
       <div className="max-w-5xl-auto py-10 px-6">
         <div className="space-y-6">
           {buses.map((bus) => (
             <div
               key={bus.id}
-              className="bg-white rounded-3xl p-8 shadow-sm hover:shadow-md transition"
-            >
+              className="bg-white rounded-3xl p-8 shadow-sm hover:shadow-md transition">
 
               {/* HEADER CARD */}
-              <div className="flex items-center gap-4 mb-8">
+              <div className="flex items-center gap-4 mb-1">
 
                 <div>
                   <h1 className="text-2xl font-bold">
@@ -198,17 +198,30 @@ export default function Search() {
                   />
                 </div>
 
-                <div>
+<div>
                   <label className="block mb-2 font-medium">
-                    E-Mail
+                    Email
                   </label>
+
+                 <input
+                    type="email"
+                    value={email}
+                    onChange={(e) =>
+                      setEmail(
+                        e.target.value
+                      )
+                    }
+                    placeholder="Masukkan email"
+                    className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
+                  />
+                </div>
 
                 <div>
                   <label className="block mb-2 font-medium">
                     Nomor Telepon
                   </label>
 
-                  <input
+                 <input
                     type="text"
                     value={telepon}
                     onChange={(e) =>
@@ -221,7 +234,7 @@ export default function Search() {
                   />
                 </div>
 
-                <div>
+<div>
                   <label className="block mb-2 font-medium">
                     Tanggal Lahir
                   </label>
@@ -237,8 +250,8 @@ export default function Search() {
                     className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
                   />
                 </div>
-              </div>
-
+                </div>
+                
               {/* PILIH KURSI */}
               <div>
                 <label className="block mb-2 font-medium">
@@ -274,17 +287,14 @@ export default function Search() {
 
               <button
                 onClick={handleNext}
-                className="bg-[#7B2CBF] text-white px-12 py-3 rounded-xl text-2xl"
-              >
+                className="bg-[#7B2CBF] text-white px-12 py-3 rounded-xl text-2xl">
                 Selanjutnya
               </button>
 
             </div>
 
           </div>
-
         </div>
-
       )}
 
       {/* MODAL PILIH KURSI */}
