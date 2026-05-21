@@ -1,21 +1,31 @@
 import {
   Link,
-  useLocation,
   useNavigate,
 } from 'react-router-dom'
 
 import logo from '../../assets/logo.png'
 
 export default function Ticket() {
-  const location = useLocation()
 
   const navigate = useNavigate()
 
-  const data = location.state
+  const data = JSON.parse(
+    localStorage.getItem(
+      'ticketData'
+    ) || '{}'
+  )
+
+  const bus = JSON.parse(
+    localStorage.getItem(
+      'selectedBus'
+    ) || '{}'
+  )
 
   return (
+
     <div className="min-h-screen bg-[#f3f4f6]">
 
+      {/* NAVBAR */}
       <nav className="bg-[#6A1FB5] px-8 py-4 flex items-center justify-between shadow-md">
 
         <img
@@ -26,14 +36,16 @@ export default function Ticket() {
 
         <div className="flex items-center gap-10 text-white font-semibold text-xl">
 
-          <Link to="/">Home</Link>
+          <Link to="/">
+            Home
+          </Link>
 
           <Link to="/search">
             Pesan
           </Link>
 
           <Link
-            to="/ticket"
+            to="/ticketsaya"
             className="font-bold"
           >
             Tiket Saya
@@ -42,183 +54,115 @@ export default function Ticket() {
           <Link to="/profile">
             Profil
           </Link>
+
         </div>
+
       </nav>
 
-      <div className="max-w-5xl mx-auto py-14 px-4">
+      {/* CONTENT */}
+      <div className="max-w-6xl mx-auto py-14 px-4">
 
-        <div className="bg-white border rounded-2xl shadow-lg p-10">
+        <div className="bg-white rounded-2xl shadow-lg p-10">
 
-          <h1 className="text-4xl font-bold text-[#1d2a44] mb-10">
+          <h1 className="text-4xl font-bold mb-10">
 
-            Detail Pesanan
+            Tiket Anda
+
           </h1>
 
-          <div className="border rounded-2xl p-8 mb-8">
+          <table className="w-full">
 
-            <div className="flex justify-between">
+            <thead>
 
-              <div className="space-y-6 text-xl">
+              <tr className="border-b">
 
-                <div className="flex items-center gap-3">
+                <th className="py-4 text-left">
+                  No.
+                </th>
 
-                  <span>👤</span>
+                <th className="py-4 text-left">
+                  Tanggal
+                </th>
 
-                  <p>
-                    {data?.nama}
-                  </p>
-                </div>
+                <th className="py-4 text-left">
+                  Nomor Pemesanan
+                </th>
 
-                <div className="flex items-start gap-3">
+                <th className="py-4 text-left">
+                  Tujuan Keberangkatan
+                </th>
 
-                  <span>📍</span>
+                <th></th>
 
-                  <div>
+              </tr>
 
-                    <div className="flex gap-5">
+            </thead>
 
-                      <p>Siantar</p>
+            <tbody>
 
-                      <p>→</p>
+              <tr className="border-b">
 
-                      <p>Amplas</p>
-                    </div>
+                <td className="py-6">
+                  1.
+                </td>
 
-                    <div className="flex gap-5 text-gray-600">
+                <td>
+                  {data?.tanggal}
+                </td>
 
-                      <p>05.30</p>
-
-                      <p>→</p>
-
-                      <p>06.06</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-
-                  <span>📅</span>
-
-                  <p>
-                    Sabtu, 28 Maret 2026
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-3">
-
-                  <span>🪑</span>
-
-                  <p>
-                    Kursi {data?.kursi}
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-center">
-
-                <p className="mb-3 text-gray-600">
-
-                  ID Transaksi :
+                <td>
                   XYZ-23415780
-                </p>
+                </td>
 
-                <img
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=EldivoTicket"
-                  alt="QR"
-                  className="mx-auto"
-                />
+                <td>
 
-                <h2 className="font-bold text-xl mt-4">
+                  {bus?.from}
+                  {' → '}
+                  {bus?.to}
 
-                  {data?.isStudent
-                    ? 'Pelajar/Mahasiswa'
-                    : 'Penumpang'}
-                </h2>
+                </td>
 
-                <h1 className="text-3xl font-bold text-[#7B2CBF] mt-2">
+                <td>
 
-                  TOTAL :
-                  Rp{' '}
-                  {data?.totalPrice?.toLocaleString(
-                    'id-ID'
-                  )}
-                </h1>
-              </div>
-            </div>
-          </div>
+                  <button
 
-          <div className="border rounded-2xl p-8">
+                    onClick={() =>
 
-            <h1 className="text-3xl font-bold mb-6">
+                      navigate(
+                        '/ticketdetail',
+                        {
 
-              Info Penting & Instruksi
-            </h1>
+                          state: {
 
-            <div className="space-y-5 text-xl">
+                            ...data,
+                            bus,
 
-              <p>
-                &gt; Tunjukkan e-ticket
-                atau kode QR saat naik
-                bus.
-              </p>
+                          },
 
-              <p>
-                &gt; Datanglah{' '}
-                <span className="font-bold">
-                  15 menit
-                </span>{' '}
-                sebelum keberangkatan.
-              </p>
+                        }
+                      )
 
-              <p>
-                &gt; Pembatalan maksimal
-                dilakukan{' '}
-                <span className="font-bold">
-                  H-3 hari keberangkatan.
-                </span>
-              </p>
+                    }
 
-              <p>
-                &gt; Reschedule tiket bus
-                maksimal dilakukan{' '}
-                <span className="font-bold">
-                  H-3 jam keberangkatan.
-                </span>
-              </p>
-            </div>
-          </div>
+                    className="bg-[#7B2CBF] text-white px-5 py-2 rounded-lg"
+                  >
 
-          <div className="flex justify-between mt-10">
+                    Detail Pesanan
 
-            <button
-              onClick={() => navigate('/')}
-              className="bg-[#7B2CBF] hover:bg-[#6A1FB5] transition text-white text-2xl px-10 py-4 rounded-2xl"
-            >
-              Kembali
-            </button>
+                  </button>
 
-            <button
-              onClick={() =>
-                alert(
-                  'Fitur Reschedule Segera Hadir'
-                )
-              }
-              className="bg-orange-500 hover:bg-orange-600 transition text-white text-2xl px-10 py-4 rounded-2xl"
-            >
-              Reschedule
-            </button>
+                </td>
 
-            <button
-              onClick={() =>
-                window.print()
-              }
-              className="bg-[#7B2CBF] hover:bg-[#6A1FB5] transition text-white text-2xl px-10 py-4 rounded-2xl"
-            >
-              Cetak Tiket
-            </button>
-          </div>
+              </tr>
+
+            </tbody>
+
+          </table>
+
         </div>
+
       </div>
+
     </div>
   )
 }

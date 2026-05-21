@@ -1,51 +1,162 @@
 import { useState } from 'react'
-import Navbar from '../components/layout/Navbar'
-import Sidebar from '../components/layout/Sidebar'
-import Footer from '../components/layout/Footer'
 
-interface MainLayoutProps {
-  children: React.ReactNode
-}
+import {
+  Outlet,
+  useNavigate,
+} from 'react-router-dom'
 
-const MainLayout = ({ children }: MainLayoutProps) => {
-  const [darkMode, setDarkMode] = useState(false)
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+import Sidebar from '../admin/Sidebar'
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode)
+export default function MainLayout() {
+
+  const navigate = useNavigate()
+
+  const [showProfile, setShowProfile] =
+    useState(false)
+
+  const handleLogout = () => {
+
+    localStorage.removeItem('login')
+
+    localStorage.removeItem('role')
+
+    navigate('/login')
   }
 
   return (
-    <div className={darkMode ? 'dark' : ''}>
-      <div className='flex bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-white min-h-screen'>
 
-        <Sidebar />
-        {sidebarOpen && (
-          <div className='fixed inset-0 bg-black/50 z-40 lg:hidden'>
-            <div className='w-64 bg-white dark:bg-slate-900 h-full p-4'>
-              <Sidebar />
-            </div>
+    <div className="flex min-h-screen bg-[#eef2f7]">
+
+      {/* SIDEBAR */}
+      <Sidebar />
+
+      {/* CONTENT */}
+      <div className="flex-1 flex flex-col">
+
+        {/* NAVBAR */}
+        <div className="bg-white h-[90px] shadow-sm flex items-center justify-between px-14 border-b relative">
+
+          {/* TITLE */}
+          <h1 className="text-4xl font-bold text-[#7B2CBF]">
+
+            Dashboard Admin
+
+          </h1>
+
+          {/* PROFILE */}
+          <div className="relative">
+
+            {/* BUTTON PROFILE */}
+            <button
+              onClick={() =>
+                setShowProfile(
+                  !showProfile
+                )
+              }
+              className="w-14 h-14 rounded-full bg-[#7B2CBF] text-white text-2xl font-bold flex items-center justify-center shadow-lg hover:scale-105 transition"
+            >
+
+              A
+
+            </button>
+
+            {/* DROPDOWN */}
+            {
+              showProfile && (
+
+                <div className="absolute right-0 mt-4 w-[260px] bg-white rounded-3xl shadow-2xl border p-6 z-50">
+
+                  {/* FOTO */}
+                  <div className="flex flex-col items-center">
+
+                    <div className="w-20 h-20 rounded-full bg-[#7B2CBF] flex items-center justify-center text-white text-4xl font-bold">
+
+                      A
+
+                    </div>
+
+                    <h1 className="text-2xl font-bold mt-4 text-[#1d2a44]">
+
+                      Admin
+
+                    </h1>
+
+                    <p className="text-gray-500">
+
+                      Super Administrator
+
+                    </p>
+
+                  </div>
+
+                  {/* GARIS */}
+                  <div className="border-t my-5"></div>
+
+                  {/* MENU */}
+                  <div className="space-y-3">
+
+                    {/* PROFILE */}
+                    <button
+                      onClick={() => {
+
+                        navigate('/admin/profile')
+
+                        setShowProfile(false)
+
+                      }}
+                      className="w-full text-left px-4 py-3 rounded-xl hover:bg-gray-100 transition font-semibold text-[#1d2a44]"
+                    >
+
+                      👤 Profil Admin
+
+                    </button>
+
+                    {/* PENGATURAN */}
+                    <button
+                      onClick={() => {
+
+                        navigate('/admin/settings')
+
+                        setShowProfile(false)
+
+                      }}
+                      className="w-full text-left px-4 py-3 rounded-xl hover:bg-gray-100 transition font-semibold text-[#1d2a44]"
+                    >
+
+                      ⚙ Pengaturan
+
+                    </button>
+
+                    {/* LOGOUT */}
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white transition font-semibold"
+                    >
+
+                      🚪 Logout
+
+                    </button>
+
+                  </div>
+
+                </div>
+
+              )
+            }
+
           </div>
-        )}
-
-        <div className='flex-1 flex flex-col'>
-
-          <Navbar
-            toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-            darkMode={darkMode}
-            toggleDarkMode={toggleDarkMode}
-          />
-
-          <main className='flex-1 p-6'>
-            {children}
-          </main>
-
-          <Footer />
 
         </div>
+
+        {/* PAGE */}
+        <div className="flex-1 p-10 overflow-y-auto">
+
+          <Outlet />
+
+        </div>
+
       </div>
+
     </div>
   )
 }
-
-export default MainLayout

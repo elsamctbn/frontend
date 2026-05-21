@@ -8,7 +8,7 @@ import {
   useEffect,
 } from 'react'
 
-import Navbar from '../../components/layout/Navbar'
+import Navbar from "../../components/user/Navbar";
 
 export default function Payment() {
 
@@ -18,8 +18,11 @@ export default function Payment() {
 
   const data = location.state
 
-  const [isStudent, setIsStudent] =
-    useState(true)
+  const selectedBus = JSON.parse(
+    localStorage.getItem(
+      'selectedBus'
+    ) || '{}'
+  )
 
   const [selectedPayment, setSelectedPayment] =
     useState('')
@@ -36,14 +39,20 @@ export default function Payment() {
   const [seconds, setSeconds] =
     useState(0)
 
-  const originalPrice = 45000
+  const originalPrice = parseInt(
+    selectedBus.price
+      ?.replace('Rp ', '')
+      ?.replace(/\./g, '')
+      || '0'
+  )
 
   const discount =
-    isStudent ? 10000 : 0
+    data?.isStudent === true
+      ? 10000
+      : 0
 
   const totalPrice =
     originalPrice - discount
-
 
   useEffect(() => {
 
@@ -56,6 +65,7 @@ export default function Payment() {
         if (seconds > 0) {
 
           setSeconds(seconds - 1)
+
         }
 
         if (seconds === 0) {
@@ -69,10 +79,13 @@ export default function Payment() {
             setMinutes(minutes - 1)
 
             setSeconds(59)
+
           }
+
         }
 
       }, 1000)
+
     }
 
     return () => clearInterval(timer)
@@ -88,6 +101,7 @@ export default function Payment() {
       )
 
       return
+
     }
 
     setIsLoading(true)
@@ -99,374 +113,218 @@ export default function Payment() {
       setShowPopup(true)
 
     }, 2500)
+
   }
 
   return (
 
     <div className="min-h-screen bg-[#f3f4f6]">
-    <Navbar/>
-      <div
-        className="
-          max-w-5xl
-          mx-auto
-          py-14
-          px-4
-        "
-      >
 
-        <div
-          className="
-            bg-white
-            rounded-[35px]
-            shadow-xl
-            p-10
-          "
-        >
+      <Navbar />
 
-          <h1
-            className="
-              text-4xl
-              font-bold
-              text-[#1d2a44]
-              mb-8
-            "
-          >
+      {/* CONTENT */}
+      <div className="max-w-5xl mx-auto py-14 px-4">
+
+        <div className="bg-white rounded-[35px] shadow-xl p-10">
+
+          {/* TITLE */}
+          <h1 className="text-4xl font-bold text-[#1d2a44] mb-8">
+
             Rincian Pemesanan
+
           </h1>
 
           <div className="border-b mb-8"></div>
 
+          {/* CONTENT */}
           <div className="grid grid-cols-2 gap-16">
 
-            <div
-              className="
-                space-y-6
-                text-xl
-              "
-            >
+            {/* KIRI */}
+            <div className="space-y-6 text-xl">
 
               <div className="flex">
 
-                <p
-                  className="
-                    w-52
-                    font-semibold
-                  "
-                >
+                <p className="w-52 font-semibold">
                   Nama
                 </p>
 
                 <p>
                   : {data?.nama}
                 </p>
+
               </div>
 
               <div className="flex">
 
-                <p
-                  className="
-                    w-52
-                    font-semibold
-                  "
-                >
+                <p className="w-52 font-semibold">
                   E-Mail
                 </p>
 
                 <p>
                   : {data?.email}
                 </p>
+
               </div>
 
               <div className="flex">
 
-                <p
-                  className="
-                    w-52
-                    font-semibold
-                  "
-                >
+                <p className="w-52 font-semibold">
                   No. Telp
                 </p>
 
                 <p>
                   : {data?.telepon}
                 </p>
+
               </div>
 
               <div className="flex">
 
-                <p
-                  className="
-                    w-52
-                    font-semibold
-                  "
-                >
+                <p className="w-52 font-semibold">
                   Tanggal Lahir
                 </p>
 
                 <p>
                   : {data?.tanggalLahir}
                 </p>
+
               </div>
+
             </div>
 
-            <div
-              className="
-                space-y-6
-                text-xl
-              "
-            >
+            {/* KANAN */}
+            <div className="space-y-6 text-xl">
 
               <div className="flex">
 
-                <p
-                  className="
-                    w-56
-                    font-semibold
-                  "
-                >
+                <p className="w-56 font-semibold">
                   Tanggal Keberangkatan
                 </p>
 
                 <p>
-                  : Sabtu, 28 Maret 2026
+                  : {data?.tanggal}
                 </p>
+
               </div>
 
               <div className="flex">
 
-                <p
-                  className="
-                    w-56
-                    font-semibold
-                  "
-                >
+                <p className="w-56 font-semibold">
                   Tujuan
                 </p>
 
                 <p>
-                  : Siantar → Amplas
+                  : {selectedBus.from}
+                  {' → '}
+                  {selectedBus.to}
                 </p>
+
               </div>
 
               <div className="flex">
 
-                <p
-                  className="
-                    w-56
-                    font-semibold
-                  "
-                >
+                <p className="w-56 font-semibold">
                   Jam
                 </p>
 
                 <p>
-                  : 05.30 → 06.06
+                  : {selectedBus.fromTime}
+                  {' → '}
+                  {selectedBus.toTime}
                 </p>
+
               </div>
 
               <div className="flex">
 
-                <p
-                  className="
-                    w-56
-                    font-semibold
-                  "
-                >
+                <p className="w-56 font-semibold">
                   Kursi
                 </p>
 
                 <p>
                   : {data?.kursi}
                 </p>
+
               </div>
 
               <div className="flex">
 
-                <p
-                  className="
-                    w-56
-                    font-semibold
-                  "
-                >
+                <p className="w-56 font-semibold">
                   Harga Awal
                 </p>
 
                 <p>
-                  : Rp 45.000
+                  : {selectedBus.price}
                 </p>
+
               </div>
 
+              {/* DISKON */}
               {
-                isStudent && (
+                data?.isStudent === true && (
 
-                  <div
-                    className="
-                      flex
-                      text-green-600
-                    "
-                  >
+                  <div className="flex text-green-600">
 
-                    <p
-                      className="
-                        w-56
-                        font-semibold
-                      "
-                    >
+                    <p className="w-56 font-semibold">
                       Diskon Pelajar
                     </p>
 
                     <p>
                       : - Rp 10.000
                     </p>
+
                   </div>
                 )
               }
 
-              <div
-                className="
-                  flex
-                  text-[#7B2CBF]
-                  font-bold
-                  text-3xl
-                  pt-3
-                "
-              >
+              {/* TOTAL */}
+              <div className="flex text-[#7B2CBF] font-bold text-3xl pt-3">
 
                 <p className="w-56">
                   Total Bayar
                 </p>
 
                 <p>
+
                   : Rp{' '}
+
                   {
                     totalPrice.toLocaleString(
                       'id-ID'
                     )
                   }
+
                 </p>
+
               </div>
+
             </div>
+
           </div>
 
           <div className="border-b my-12"></div>
 
-          <div>
-
-            <h1
-              className="
-                text-4xl
-                font-bold
-                text-[#1d2a44]
-                mb-6
-              "
-            >
-              Pelajar / Mahasiswa
-            </h1>
-
-            <p
-              className="
-                text-lg
-                text-gray-600
-                mb-6
-              "
-            >
-              Dapatkan potongan diskon
-              Rp 10.000 khusus pelajar
-              dan mahasiswa.
-            </p>
-
-            <div
-              className="
-                flex
-                gap-10
-                text-xl
-              "
-            >
-
-              <label
-                className="
-                  flex
-                  items-center
-                  gap-3
-                  cursor-pointer
-                "
-              >
-
-                <input
-                  type="radio"
-                  checked={isStudent}
-                  onChange={() =>
-                    setIsStudent(true)
-                  }
-                />
-
-                Ya
-              </label>
-
-              <label
-                className="
-                  flex
-                  items-center
-                  gap-3
-                  cursor-pointer
-                "
-              >
-
-                <input
-                  type="radio"
-                  checked={!isStudent}
-                  onChange={() =>
-                    setIsStudent(false)
-                  }
-                />
-
-                Tidak
-              </label>
-            </div>
-          </div>
-
+          {/* PAYMENT */}
           <div className="mt-16">
 
-            <h1
-              className="
-                text-4xl
-                font-bold
-                text-[#1d2a44]
-                mb-10
-              "
-            >
+            <h1 className="text-4xl font-bold text-[#1d2a44] mb-10">
+
               Metode Pembayaran
+
             </h1>
 
             <div className="grid grid-cols-2 gap-8">
 
-              <div
-                className="
-                  bg-gray-50
-                  rounded-3xl
-                  p-8
-                  border
-                "
-              >
+              {/* BANK */}
+              <div className="bg-gray-50 rounded-3xl p-8 border">
 
-                <h2
-                  className="
-                    text-2xl
-                    font-bold
-                    mb-8
-                    text-center
-                  "
-                >
+                <h2 className="text-2xl font-bold mb-8 text-center">
+
                   Transfer Bank
+
                 </h2>
 
-                <div
-                  className="
-                    space-y-5
-                    text-xl
-                  "
-                >
+                <div className="space-y-5 text-xl">
 
                   {
                     [
@@ -478,12 +336,7 @@ export default function Payment() {
 
                       <label
                         key={bank}
-                        className="
-                          flex
-                          items-center
-                          gap-3
-                          cursor-pointer
-                        "
+                        className="flex items-center gap-3 cursor-pointer"
                       >
 
                         <input
@@ -497,38 +350,25 @@ export default function Payment() {
                         />
 
                         {bank}
+
                       </label>
                     ))
                   }
+
                 </div>
+
               </div>
 
-              <div
-                className="
-                  bg-gray-50
-                  rounded-3xl
-                  p-8
-                  border
-                "
-              >
+              {/* EWALLET */}
+              <div className="bg-gray-50 rounded-3xl p-8 border">
 
-                <h2
-                  className="
-                    text-2xl
-                    font-bold
-                    mb-8
-                    text-center
-                  "
-                >
+                <h2 className="text-2xl font-bold mb-8 text-center">
+
                   E-Wallet
+
                 </h2>
 
-                <div
-                  className="
-                    space-y-5
-                    text-xl
-                  "
-                >
+                <div className="space-y-5 text-xl">
 
                   {
                     [
@@ -540,12 +380,7 @@ export default function Payment() {
 
                       <label
                         key={wallet}
-                        className="
-                          flex
-                          items-center
-                          gap-3
-                          cursor-pointer
-                        "
+                        className="flex items-center gap-3 cursor-pointer"
                       >
 
                         <input
@@ -559,281 +394,169 @@ export default function Payment() {
                         />
 
                         {wallet}
+
                       </label>
                     ))
                   }
+
                 </div>
+
               </div>
+
             </div>
 
-            <div
-              className="
-                flex
-                justify-center
-                mt-14
-              "
-            >
+            {/* BUTTON */}
+            <div className="flex justify-center mt-14">
 
               <button
                 onClick={handlePayment}
-                className="
-                  bg-[#7B2CBF]
-                  hover:bg-[#6A1FB5]
-                  transition
-                  text-white
-                  text-2xl
-                  font-bold
-                  px-16
-                  py-4
-                  rounded-2xl
-                "
+                className="bg-[#7B2CBF] hover:bg-[#6A1FB5] transition text-white text-2xl font-bold px-16 py-4 rounded-2xl"
               >
+
                 Bayar Sekarang
+
               </button>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
 
+      {/* LOADING */}
       {
         isLoading && (
 
-          <div
-            className="
-              fixed
-              inset-0
-              bg-black/50
-              flex
-              items-center
-              justify-center
-              z-50
-            "
-          >
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
 
-            <div
-              className="
-                bg-white
-                rounded-3xl
-                p-10
-                text-center
-                w-[400px]
-              "
-            >
+            <div className="bg-white rounded-3xl p-10 text-center w-[400px]">
 
-              <div
-                className="
-                  w-16
-                  h-16
-                  border-4
-                  border-[#7B2CBF]
-                  border-t-transparent
-                  rounded-full
-                  animate-spin
-                  mx-auto
-                  mb-6
-                "
-              ></div>
+              <div className="w-16 h-16 border-4 border-[#7B2CBF] border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
 
-              <h1
-                className="
-                  text-2xl
-                  font-bold
-                  text-[#1d2a44]
-                "
-              >
+              <h1 className="text-2xl font-bold text-[#1d2a44]">
+
                 Memproses Pembayaran...
+
               </h1>
 
-              <p
-                className="
-                  text-gray-500
-                  mt-2
-                "
-              >
-                Mohon tunggu sebentar
-              </p>
             </div>
+
           </div>
         )
       }
 
+      {/* POPUP */}
       {
         showPopup && (
 
-          <div
-            className="
-              fixed
-              inset-0
-              bg-black/60
-              flex
-              items-center
-              justify-center
-              z-50
-            "
-          >
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
 
-            <div
-              className="
-                bg-white
-                rounded-[35px]
-                p-10
-                w-[500px]
-                text-center
-              "
-            >
+            <div className="bg-white rounded-3xl p-10 w-[500px] text-center">
 
-              <div
-                className="
-                  w-24
-                  h-24
-                  bg-green-100
-                  rounded-full
-                  flex
-                  items-center
-                  justify-center
-                  mx-auto
-                  mb-6
-                "
-              >
+              <h1 className="text-3xl font-bold mb-6 text-[#1d2a44]">
 
-                <span className="text-5xl">
-                  ✅
-                </span>
-              </div>
+                Scan QR Pembayaran
 
-              <h1
-                className="
-                  text-4xl
-                  font-bold
-                  text-[#1d2a44]
-                  mb-3
-                "
-              >
-                Pembayaran Berhasil
               </h1>
 
-              <p
-                className="
-                  text-gray-500
-                  text-lg
-                  mb-8
-                "
-              >
-                Tiket Eldivo kamu berhasil
-                dipesan
+              {/* QR */}
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=PembayaranBus"
+                alt="QRIS"
+                className="mx-auto mb-6"
+              />
+
+              {/* TOTAL */}
+              <p className="text-xl font-semibold mb-2">
+
+                Total Pembayaran
+
               </p>
 
-              <div
-                className="
-                  bg-gray-100
-                  rounded-3xl
-                  p-6
-                  mb-8
-                "
-              >
+              <h1 className="text-4xl font-bold text-[#7B2CBF] mb-6">
 
-                <h2
-                  className="
-                    text-2xl
-                    font-bold
-                    mb-4
-                  "
-                >
-                  QRIS Pembayaran
-                </h2>
+                Rp{' '}
 
-                <img
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=EldivoPayment"
-                  alt="QRIS"
-                  className="
-                    mx-auto
-                    rounded-2xl
-                  "
-                />
-
-                <p
-                  className="
-                    mt-4
-                    text-gray-500
-                  "
-                >
-                  Scan QR untuk pembayaran
-                </p>
-              </div>
-
-              <div
-                className="
-                  bg-[#f3f4f6]
-                  rounded-2xl
-                  p-5
-                  mb-8
-                "
-              >
-
-                <p
-                  className="
-                    text-lg
-                    text-gray-500
-                    mb-2
-                  "
-                >
-                  Selesaikan pembayaran dalam
-                </p>
-
-                <h1
-                  className="
-                    text-5xl
-                    font-bold
-                    text-[#7B2CBF]
-                  "
-                >
-
-                  {
-                    String(minutes).padStart(
-                      2,
-                      '0'
-                    )
-                  }
-
-                  :
-
-                  {
-                    String(seconds).padStart(
-                      2,
-                      '0'
-                    )
-                  }
-                </h1>
-              </div>
-
-              <button
-                onClick={() =>
-                  navigate('/ticket', {
-                    state: {
-                      ...data,
-                      isStudent,
-                      totalPrice,
-                    },
-                  })
+                {
+                  totalPrice.toLocaleString(
+                    'id-ID'
+                  )
                 }
-                className="
-                  bg-[#7B2CBF]
-                  hover:bg-[#6A1FB5]
-                  transition
-                  text-white
-                  text-2xl
-                  font-bold
-                  px-12
-                  py-4
-                  rounded-2xl
-                "
+
+              </h1>
+
+              {/* TIMER */}
+              <p className="text-red-500 font-semibold mb-8">
+
+                Selesaikan pembayaran dalam{' '}
+
+                {minutes}:
+                {
+                  seconds
+                    .toString()
+                    .padStart(2, '0')
+                }
+
+              </p>
+
+              {/* BUTTON */}
+              <button
+
+                onClick={() => {
+
+                  // SAVE TICKET
+                  localStorage.setItem(
+
+                    'ticketData',
+
+                    JSON.stringify({
+
+                      nama: data?.nama,
+
+                      email: data?.email,
+
+                      telepon:
+                        data?.telepon,
+
+                      tanggalLahir:
+                        data?.tanggalLahir,
+
+                      tanggal:
+                        data?.tanggal,
+
+                      kursi:
+                        data?.kursi,
+
+                      totalPrice,
+
+                      isStudent:
+                        data?.isStudent,
+
+                      bus: selectedBus,
+
+                    })
+
+                  )
+
+                  navigate('/ticketsaya')
+
+                }}
+
+                className="bg-[#7B2CBF] hover:bg-[#6A1FB5] transition text-white text-xl font-bold px-10 py-3 rounded-2xl"
               >
+
                 Lihat Tiket
+
               </button>
+
             </div>
+
           </div>
         )
       }
+
     </div>
   )
 }
