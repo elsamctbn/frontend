@@ -50,29 +50,26 @@ const Home = () => {
       <Navbar />
       <section className='bg-[#6F1AB6] text-white pb-24 pt-10'>
 
-        <div className='max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center'>
+       <div className='max-w-7xl mx-auto px-5 grid md:grid-cols-2 items-center'>  
+       
+          <div className='w-full px-20'>
 
-          <div>
-
-            <p className='uppercase tracking-widest mb-4 text-purple-200'>
+            <p className='text-lg'>
               ETA MARBUS
             </p>
 
-            <h1 className='text-5xl md:text-7xl font-bold leading-tight'>
-              Book Bus Tickets
-              Easily & Quickly
+            <h1 className='font-bold text-5xl mt-3 w-[650px] leading-tight'>
+              Book Bus Tickets Easily & Quickly
             </h1>
 
-            <p className='mt-6 text-xl text-purple-100 leading-relaxed'>
-              Bersama Eldivo, nikmati perjalanan yang nyaman,
-              aman, dan terpercaya ke berbagai kota tujuan.
+            <p className='text-2xl mt-6 leading-relaxed w-[700px]'>
+              Bersama Eldivo, nikmati perjalanan yang nyaman, aman, dan terpercaya ke berbagai kota tujuan.
             </p>
-
           </div>
 
-          <div className='hidden md:flex justify-center'>
+          <div className='hidden md:flex ml-[100px] justify-center'>
 
-            <div className='w-[350px] h-[350px] bg-white/10 rounded-full flex items-center justify-center'>
+            <div className='w-[350px] h-[350px] bg-white/20 rounded-full flex items-center justify-center'>
 
               <img
                 src={logo}
@@ -288,11 +285,6 @@ const Home = () => {
                   Gunakan kartu pelajar atau KTM
                   untuk mendapatkan potongan harga perjalanan.
                 </p>
-
-                <button className='mt-8 bg-white text-purple-700 font-bold px-5 py-3 rounded-2xl hover:bg-purple-100 transition'>
-                  Klaim Promo
-                </button>
-
               </div>
 
               <div className='w-[320px] bg-gradient-to-br from-indigo-700 to-blue-500 rounded-[35px] p-8 text-white shadow-2xl hover:-translate-y-3 hover:shadow-blue-500/40 transition duration-500'>

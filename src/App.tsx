@@ -10,11 +10,15 @@ import Login from './pages/user/Login'
 import Payment from './pages/user/Payment'
 import Profile from './pages/user/Profile'
 import Ticket from './pages/user/Ticket'
+import Register from './pages/user/Register'
+import { useState } from 'react'
 
 function App() {
+  const [darkMode, setDarkMode] =
+    useState(false)
 
   return (
-
+    
     <BrowserRouter>
 
       <Routes>
@@ -31,6 +35,11 @@ function App() {
         <Route
           path="/login"
           element={<Login />}
+        />
+
+        <Route
+          path="/register"
+          element={<Register />} 
         />
 
         <Route
