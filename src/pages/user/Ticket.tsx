@@ -10,16 +10,10 @@ export default function Ticket() {
   const navigate = useNavigate()
 
   const data = JSON.parse(
-    localStorage.getItem(
-      'ticketData'
-    ) || '{}'
-  )
+    localStorage.getItem('ticketData') || '{}')
 
   const bus = JSON.parse(
-    localStorage.getItem(
-      'selectedBus'
-    ) || '{}'
-  )
+    localStorage.getItem('selectedBus') || '{}')
 
   return (
 
@@ -31,8 +25,7 @@ export default function Ticket() {
         <img
           src={logo}
           alt="logo"
-          className="h-12"
-        />
+          className="h-12"/>
 
         <div className="flex items-center gap-10 text-white font-semibold text-xl">
 
@@ -46,8 +39,7 @@ export default function Ticket() {
 
           <Link
             to="/ticketsaya"
-            className="font-bold"
-          >
+            className="font-bold">
             Tiket Saya
           </Link>
 
@@ -60,14 +52,12 @@ export default function Ticket() {
       </nav>
 
       {/* CONTENT */}
-      <div className="max-w-6xl mx-auto py-14 px-4">
+      <div className="max-w-8xl mx-auto py-14 px-4">
 
         <div className="bg-white rounded-2xl shadow-lg p-10">
 
-          <h1 className="text-4xl font-bold mb-10">
-
+          <h1 className="text-4xl font-bold mb-3">
             Tiket Anda
-
           </h1>
 
           <table className="w-full">
@@ -122,21 +112,20 @@ export default function Ticket() {
 
                 </td>
 
+                <td className='font-bold text-green-600'>
+                  Sudah Dibayar
+                </td>
+
                 <td>
 
                   <button
-
                     onClick={() =>
-
                       navigate(
                         '/ticketdetail',
                         {
-
                           state: {
-
                             ...data,
                             bus,
-
                           },
 
                         }
@@ -144,11 +133,8 @@ export default function Ticket() {
 
                     }
 
-                    className="bg-[#7B2CBF] text-white px-5 py-2 rounded-lg"
-                  >
-
+                    className="bg-[#7B2CBF] text-white px-5 py-2 rounded-lg">
                     Detail Pesanan
-
                   </button>
 
                 </td>

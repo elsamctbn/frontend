@@ -1,15 +1,14 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom'
 import Navbar from "../../components/user/Navbar";
 import Footer from "../../components/user/Footer";
 
-import logo from '../../assets/logo.png'
 import instagramLogo from '../../assets/instagram.png'
 import contactLogo from '../../assets/contact.png'
 import eldivo from '../../assets/eldivo.png'
 
 const Home = () => {
+  const navigate = useNavigate()
 
   const cityData: Record<string, string[]> = {
 
@@ -50,9 +49,47 @@ const Home = () => {
   const [toTerminal, setToTerminal] =
     useState('')
 
+  const [tanggal, setTanggal] =
+    useState('')
+
   const [showAllPromo, setShowAllPromo] =
     useState(false)
 
+  const handleSearch = () => {
+
+  // VALIDASI
+  if (
+    !fromCity ||
+    !fromTerminal ||
+    !toCity ||
+    !toTerminal ||
+    !tanggal
+  ) {
+    alert('Semua data wajib diisi!')
+    return
+  }
+
+  // ASAL DAN TUJUAN GABOLEH SAMA
+  if (
+    fromCity === toCity &&
+    fromTerminal === toTerminal
+  ) {
+    alert('Asal dan tujuan tidak boleh sama!')
+    return
+  }
+
+  // PINDAH HALAMAN
+  navigate('/search', {
+    state: {
+      fromCity,
+      fromTerminal,
+      toCity,
+      toTerminal,
+      tanggal,
+
+    }
+  })
+}
   return (
 
     <div className='bg-slate-100 min-h-screen'>
@@ -71,11 +108,11 @@ const Home = () => {
               ETA MARBUS
             </p>
 
-            <h1 className='font-bold text-5xl mt-3 w-[650px] leading-tight'>
+            <h1 className='font-bold text-5xl mt-3 w-[550px] leading-tight'>
               Book Bus Tickets Easily & Quickly
             </h1>
 
-            <p className='text-2xl mt-6 leading-relaxed w-[700px]'>
+            <p className='text-2xl mt-6 leading-relaxed w-[550px]'>
               Bersama Eldivo, nikmati perjalanan yang nyaman,
               aman, dan terpercaya ke berbagai kota tujuan.
             </p>
@@ -89,11 +126,10 @@ const Home = () => {
               <img
               src={eldivo}
               alt='Bus Eldivo'
-              className='w-[300px] object-contain drop-shadow-2xl'
-              />
+              className='w-[300px] object-contain drop-shadow-2xl'/>
           </div>
-          </div>
-          </div>
+        </div>
+      </div>
 
         {/* SEARCH */}
         <div className='max-w-6xl mx-auto mt-16 px-6'>
@@ -115,9 +151,8 @@ const Home = () => {
                   setFromTerminal('')
 
                 }}
-                className='w-full bg-white text-slate-800 border border-purple-200 p-4 rounded-2xl outline-none focus:ring-4 focus:ring-purple-300 transition appearance-none'
-              >
-
+                className='w-full bg-white text-slate-800 border border-purple-200 p-4 rounded-2xl outline-none focus:ring-4 focus:ring-purple-300 transition appearance-none'>
+                
                 <option value=''>
                   Pilih Kota
                 </option>
@@ -127,11 +162,8 @@ const Home = () => {
 
                     <option
                       key={city}
-                      value={city}
-                    >
-
+                      value={city}>
                       {city}
-
                     </option>
 
                   ))
@@ -159,11 +191,8 @@ const Home = () => {
 
                     <option
                       key={terminal}
-                      value={terminal}
-                    >
-
+                      value={terminal}>
                       {terminal}
-
                     </option>
 
                   ))
@@ -188,23 +217,17 @@ const Home = () => {
                   setToTerminal('')
 
                 }}
-                className='w-full bg-white text-slate-800 border border-purple-200 p-4 rounded-2xl outline-none focus:ring-4 focus:ring-purple-300 transition appearance-none'
-              >
-
+                className='w-full bg-white text-slate-800 border border-purple-200 p-4 rounded-2xl outline-none focus:ring-4 focus:ring-purple-300 transition appearance-none'>
                 <option value=''>
                   Pilih Kota
                 </option>
 
                 {
                   Object.keys(cityData).map((city) => (
-
                     <option
                       key={city}
-                      value={city}
-                    >
-
+                      value={city}>
                       {city}
-
                     </option>
 
                   ))
@@ -219,9 +242,7 @@ const Home = () => {
                     e.target.value
                   )
                 }
-                className='w-full bg-white text-slate-800 border border-purple-200 p-4 rounded-2xl outline-none focus:ring-4 focus:ring-purple-300 transition mt-4 appearance-none'
-              >
-
+                className='w-full bg-white text-slate-800 border border-purple-200 p-4 rounded-2xl outline-none focus:ring-4 focus:ring-purple-300 transition mt-4 appearance-none'>
                 <option value=''>
                   Pilih Terminal
                 </option>
@@ -229,59 +250,41 @@ const Home = () => {
                 {
                   toCity &&
                   cityData[toCity].map((terminal) => (
-
                     <option
                       key={terminal}
-                      value={terminal}
-                    >
-
+                      value={terminal}>
                       {terminal}
-
                     </option>
-
                   ))
                 }
-
               </select>
-
             </div>
 
             {/* TANGGAL */}
-            <div>
+              <div>
+                <label className='font-semibold text-slate-700 mb-2 block'>
+                  Tanggal
+                </label>
 
-              <label className='font-semibold text-slate-700 mb-2 block'>
-                Tanggal
-              </label>
+                <input
+                  type='date'
+                  value={tanggal}
+                  onChange={(e) =>
+                    setTanggal(e.target.value)
+                  }
+                  className='w-full bg-white text-slate-800 border border-purple-200 p-4 rounded-2xl outline-none focus:ring-4 focus:ring-purple-300 transition'/>
+              </div>
 
-              <input
-                type='date'
-                className='w-full bg-white text-slate-800 border border-purple-200 p-4 rounded-2xl outline-none focus:ring-4 focus:ring-purple-300 transition'
-              />
-
-            </div>
-
-            {/* BUTTON */}
-            <div className='flex items-end'>
-
-              <Link
-                to='/search'
-                className='w-full'
-              >
-
-                <button className='bg-[#7B2CBF] text-white rounded-2xl font-bold w-full py-4 hover:bg-[#6F1AB6] transition duration-300 shadow-lg hover:shadow-purple-400/40'>
-
+              {/* BUTTON */}
+              <div className='flex items-end'>
+                <button
+                  onClick={handleSearch}
+                  className='bg-[#7B2CBF] text-white rounded-2xl font-bold w-full py-4 hover:bg-[#6F1AB6] transition duration-300 shadow-lg hover:shadow-purple-400/40'>
                   Cari Bus
-
                 </button>
-
-              </Link>
-
-            </div>
-
+              </div>
           </div>
-
         </div>
-
       </section>
 
       {/* PROMO */}
@@ -293,7 +296,6 @@ const Home = () => {
           <div className='flex items-center justify-between mb-12'>
 
             <div>
-
               <p className='text-[#7B2CBF] font-semibold uppercase tracking-widest'>
                 PROMO ELDIVO
               </p>
@@ -301,7 +303,6 @@ const Home = () => {
               <h1 className='text-5xl font-bold text-slate-800 mt-3'>
                 Promo & Informasi Terbaru
               </h1>
-
             </div>
 
             {/* BUTTON LIHAT SEMUA */}
@@ -309,8 +310,7 @@ const Home = () => {
               onClick={() =>
                 setShowAllPromo(!showAllPromo)
               }
-              className='hidden md:flex items-center gap-2 text-[#7B2CBF] font-semibold hover:gap-4 transition-all'
-            >
+              className='hidden md:flex items-center gap-2 text-[#7B2CBF] font-semibold hover:gap-4 transition-all'>
 
               {
                 showAllPromo
@@ -319,7 +319,6 @@ const Home = () => {
               }
 
             </button>
-
           </div>
 
           {/* SHOW ALL */}
@@ -347,12 +346,10 @@ const Home = () => {
                     Gunakan kartu pelajar atau KTM
                     untuk mendapatkan potongan harga perjalanan.
                   </p>
-
                 </div>
 
                 {/* CARD 2 */}
                 <div className='bg-gradient-to-br from-indigo-700 to-blue-500 rounded-[35px] p-8 text-white shadow-2xl'>
-
                   <div className='text-6xl'>
                     💳
                   </div>
@@ -368,12 +365,10 @@ const Home = () => {
                   <p className='mt-5 text-blue-100 leading-relaxed'>
                     Nikmati cashback spesial untuk pembayaran menggunakan QRIS dan E-Wallet.
                   </p>
-
                 </div>
 
                 {/* CARD 3 */}
                 <div className='bg-gradient-to-br from-pink-600 to-rose-500 rounded-[35px] p-8 text-white shadow-2xl'>
-
                   <div className='text-6xl'>
                     🚌
                   </div>
@@ -389,12 +384,10 @@ const Home = () => {
                   <p className='mt-5 text-pink-100 leading-relaxed'>
                     Dapatkan harga spesial untuk perjalanan akhir pekan bersama Eldivo.
                   </p>
-
                 </div>
 
                 {/* CARD 4 */}
                 <div className='bg-gradient-to-br from-amber-500 to-orange-500 rounded-[35px] p-8 text-white shadow-2xl'>
-
                   <div className='text-6xl'>
                     🎁
                   </div>
@@ -410,9 +403,7 @@ const Home = () => {
                   <p className='mt-5 text-orange-100 leading-relaxed'>
                     Daftar sekarang dan dapatkan voucher untuk petualangan pertamamu bersama Eldivo.
                   </p>
-
                 </div>
-
               </div>
 
             ) : (
@@ -443,8 +434,7 @@ const Home = () => {
                   </div>
 
                   {/* CARD 2 */}
-                  <div className='w-[320px] bg-gradient-to-br from-indigo-700 to-blue-500 rounded-[35px] p-8 text-white shadow-2xl hover:-translate-y-3 transition duration-500'>
-
+                  <div className='w-[320px] bg-gradient-to-br from-indigo-700 to-blue-500 rounded-[35px] p-8 text-white shadow-2xl hover:-translate-y-3 transition duration-500'>6
                     <div className='text-6xl'>
                       💳
                     </div>
@@ -460,7 +450,6 @@ const Home = () => {
                     <p className='mt-5 text-blue-100 leading-relaxed'>
                       Nikmati cashback spesial untuk pembayaran menggunakan QRIS dan E-Wallet.
                     </p>
-
                   </div>
 
                   {/* CARD 3 */}
@@ -570,8 +559,7 @@ const Home = () => {
               <img
                 src={contactLogo}
                 alt='Contact'
-                className='w-24 h-24 mx-auto object-contain'
-              />
+                className='w-24 h-24 mx-auto object-contain'/>
 
               <h2 className='text-4xl font-bold mt-6'>
                 WhatsApp
