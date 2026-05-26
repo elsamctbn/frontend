@@ -9,7 +9,7 @@ const Navbar = () => {
     <nav className="bg-[#6F1AB6] text-white sticky top-0 z-50 shadow-lg">
 
       {/* CONTAINER */}
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-8xl mx-auto px-8">
 
         {/* CONTENT */}
         <div className="h-[90px] flex items-center justify-between">

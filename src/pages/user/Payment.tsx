@@ -13,16 +13,9 @@ import Navbar from "../../components/user/Navbar";
 export default function Payment() {
 
   const location = useLocation()
-
   const navigate = useNavigate()
-
   const data = location.state
-
-  const selectedBus = JSON.parse(
-    localStorage.getItem(
-      'selectedBus'
-    ) || '{}'
-  )
+  const selectedBus = JSON.parse(localStorage.getItem('selectedBus') || '{}')
 
   const [selectedPayment, setSelectedPayment] =
     useState('')
@@ -34,7 +27,7 @@ export default function Payment() {
     useState(false)
 
   const [minutes, setMinutes] =
-    useState(15)
+    useState(90)
 
   const [seconds, setSeconds] =
     useState(0)
@@ -59,7 +52,7 @@ export default function Payment() {
     let timer: any
 
     if (showPopup) {
-
+      
       timer = setInterval(() => {
 
         if (seconds > 0) {
@@ -99,9 +92,7 @@ export default function Payment() {
       alert(
         'Pilih metode pembayaran terlebih dahulu'
       )
-
       return
-
     }
 
     setIsLoading(true)
@@ -123,21 +114,19 @@ export default function Payment() {
       <Navbar />
 
       {/* CONTENT */}
-      <div className="max-w-5xl mx-auto py-14 px-4">
+      <div className="max-w-7xl mx-auto py-14 px-4 whitespace-nowrap">
 
         <div className="bg-white rounded-[35px] shadow-xl p-10">
 
           {/* TITLE */}
           <h1 className="text-4xl font-bold text-[#1d2a44] mb-8">
-
             Rincian Pemesanan
-
           </h1>
 
           <div className="border-b mb-8"></div>
 
           {/* CONTENT */}
-          <div className="grid grid-cols-2 gap-16">
+          <div className="grid grid-cols-2 gap-16 whitaspace-nowrap">
 
             {/* KIRI */}
             <div className="space-y-6 text-xl">
@@ -285,7 +274,7 @@ export default function Payment() {
                 </p>
 
                 <p>
-
+                  
                   : Rp{' '}
 
                   {
@@ -308,20 +297,16 @@ export default function Payment() {
           <div className="mt-16">
 
             <h1 className="text-4xl font-bold text-[#1d2a44] mb-10">
-
               Metode Pembayaran
-
             </h1>
 
             <div className="grid grid-cols-2 gap-8">
 
               {/* BANK */}
-              <div className="bg-gray-50 rounded-3xl p-8 border">
+              <div className="bg-gray-200 rounded-3xl p-8 border">
 
                 <h2 className="text-2xl font-bold mb-8 text-center">
-
                   Transfer Bank
-
                 </h2>
 
                 <div className="space-y-5 text-xl">
@@ -336,8 +321,7 @@ export default function Payment() {
 
                       <label
                         key={bank}
-                        className="flex items-center gap-3 cursor-pointer"
-                      >
+                        className="flex items-center gap-3 cursor-pointer">
 
                         <input
                           type="radio"
@@ -360,12 +344,10 @@ export default function Payment() {
               </div>
 
               {/* EWALLET */}
-              <div className="bg-gray-50 rounded-3xl p-8 border">
+              <div className="bg-gray-200 rounded-3xl p-8 border">
 
                 <h2 className="text-2xl font-bold mb-8 text-center">
-
                   E-Wallet
-
                 </h2>
 
                 <div className="space-y-5 text-xl">
@@ -380,8 +362,7 @@ export default function Payment() {
 
                       <label
                         key={wallet}
-                        className="flex items-center gap-3 cursor-pointer"
-                      >
+                        className="flex items-center gap-3 cursor-pointer">
 
                         <input
                           type="radio"
@@ -410,11 +391,8 @@ export default function Payment() {
 
               <button
                 onClick={handlePayment}
-                className="bg-[#7B2CBF] hover:bg-[#6A1FB5] transition text-white text-2xl font-bold px-16 py-4 rounded-2xl"
-              >
-
+                className="bg-[#7B2CBF] hover:bg-[#6A1FB5] transition text-white text-2xl font-bold px-16 py-4 rounded-2xl">
                 Bayar Sekarang
-
               </button>
 
             </div>
@@ -436,9 +414,7 @@ export default function Payment() {
               <div className="w-16 h-16 border-4 border-[#7B2CBF] border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
 
               <h1 className="text-2xl font-bold text-[#1d2a44]">
-
                 Memproses Pembayaran...
-
               </h1>
 
             </div>
@@ -456,27 +432,21 @@ export default function Payment() {
             <div className="bg-white rounded-3xl p-10 w-[500px] text-center">
 
               <h1 className="text-3xl font-bold mb-6 text-[#1d2a44]">
-
                 Scan QR Pembayaran
-
               </h1>
 
               {/* QR */}
               <img
                 src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=PembayaranBus"
                 alt="QRIS"
-                className="mx-auto mb-6"
-              />
+                className="mx-auto mb-6"/>
 
               {/* TOTAL */}
               <p className="text-xl font-semibold mb-2">
-
                 Total Pembayaran
-
               </p>
 
               <h1 className="text-4xl font-bold text-[#7B2CBF] mb-6">
-
                 Rp{' '}
 
                 {
@@ -489,16 +459,13 @@ export default function Payment() {
 
               {/* TIMER */}
               <p className="text-red-500 font-semibold mb-8">
-
                 Selesaikan pembayaran dalam{' '}
-
                 {minutes}:
                 {
                   seconds
                     .toString()
                     .padStart(2, '0')
                 }
-
               </p>
 
               {/* BUTTON */}
@@ -512,43 +479,23 @@ export default function Payment() {
                     'ticketData',
 
                     JSON.stringify({
-
                       nama: data?.nama,
-
                       email: data?.email,
-
-                      telepon:
-                        data?.telepon,
-
-                      tanggalLahir:
-                        data?.tanggalLahir,
-
-                      tanggal:
-                        data?.tanggal,
-
-                      kursi:
-                        data?.kursi,
-
+                      telepon: data?.telepon,
+                      tanggalLahir: data?.tanggalLahir,
+                      tanggal: data?.tanggal,
+                      kursi: data?.kursi,
                       totalPrice,
-
-                      isStudent:
-                        data?.isStudent,
-
+                      isStudent: data?.isStudent,
                       bus: selectedBus,
-
                     })
 
                   )
-
                   navigate('/ticketsaya')
-
                 }}
 
-                className="bg-[#7B2CBF] hover:bg-[#6A1FB5] transition text-white text-xl font-bold px-10 py-3 rounded-2xl"
-              >
-
+                className="bg-[#7B2CBF] hover:bg-[#6A1FB5] transition text-white text-xl font-bold px-10 py-3 rounded-2xl">
                 Lihat Tiket
-
               </button>
 
             </div>

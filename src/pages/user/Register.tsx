@@ -1,32 +1,46 @@
 import { useState } from 'react'
-import {
-  Link,
-  useNavigate,
-} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import Navbar from "../../components/user/Navbar";
 
 export default function Register() {
 
   const navigate = useNavigate()
 
-  const [nama, setNama] =
-    useState('')
+  const [nama, setNama] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const [email, setEmail] =
-    useState('')
+  //VALIDASI EMAIL
+  const isValidEmail = (email) => {
+    return email.endsWith('@gmail.com')
+  }
 
-  const [password, setPassword] =
-    useState('')
+  //VALIDASI PASSWORD
+  const isValidPassword = (password) => {
+    const hasNumber = /\d/
+    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/
+
+    return (
+      password.length >= 6 &&
+      hasNumber.test(password) &&
+      hasSymbol.test(password)
+    )
+  }
 
   const handleRegister = () => {
 
-    if (
-      !email.endsWith('@gmail.com')
-    ) {
+    if (!nama) {
+      alert('Nama wajib diisi')
+      return
+    }
 
-      alert(
-        'Email harus menggunakan @gmail.com'
-      )
+    if (!isValidEmail(email)) {
+      alert('Email harus menggunakan @gmail.com')
+      return
+    }
 
+    if (!isValidPassword(password)) {
+      alert('Password minimal 6 karakter, harus ada angka & simbol')
       return
     }
 
@@ -36,10 +50,7 @@ export default function Register() {
       password,
     }
 
-    localStorage.setItem(
-      'user',
-      JSON.stringify(user)
-    )
+    localStorage.setItem('user', JSON.stringify(user))
 
     alert('Daftar berhasil!')
 
@@ -47,84 +58,60 @@ export default function Register() {
   }
 
   return (
-
     <div className="min-h-screen bg-[#f3f4f6] flex flex-col justify-between">
+
+      <Navbar />
 
       {/* CONTENT */}
       <div className="flex items-center justify-center flex-1 py-20">
 
-        {/* CARD REGISTER */}
-        <div className="bg-white w-[500px] rounded-[35px] px-12 py-14 shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-gray-100">
+        <div className="bg-white w-[500px] rounded-[35px] px-12 py-14 shadow border">
 
-          {/* TITLE */}
-          <h1 className="text-5xl font-bold text-center text-[#1d2a44] mb-14">
+          <h1 className="text-5xl font-bold text-center mb-14">
             Register
           </h1>
 
-          {/* NAMA */}
           <input
             type="text"
             placeholder="Nama"
             value={nama}
-            onChange={(e) =>
-              setNama(e.target.value)
-            }
-            className="w-full border border-gray-300 rounded-2xl px-6 py-5 text-xl outline-none mb-8"
+            onChange={(e) => setNama(e.target.value)}
+            className="w-full border px-6 py-5 mb-8 rounded-2xl"
           />
 
-          {/* EMAIL */}
           <input
             type="email"
             placeholder="Email"
             value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
-            className="w-full border border-gray-300 rounded-2xl px-6 py-5 text-xl outline-none mb-8"
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full border px-6 py-5 mb-8 rounded-2xl"
           />
 
-          {/* PASSWORD */}
           <input
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }
-            className="w-full border border-gray-300 rounded-2xl px-6 py-5 text-xl outline-none mb-10"
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full border px-6 py-5 mb-10 rounded-2xl"
           />
 
-          {/* BUTTON REGISTER */}
           <button
             onClick={handleRegister}
-            className="w-full bg-[#7B2CBF] hover:bg-[#6A1FB5] transition text-white text-2xl font-bold py-5 rounded-2xl"
+            className="w-full bg-[#7B2CBF] text-white py-5 rounded-2xl"
           >
             Daftar
           </button>
 
-          {/* LOGIN */}
-          <p className="text-center text-xl mt-10 text-[#1d2a44]">
-
-            Sudah punya akun?{' '}
-
-            <Link
-              to="/login"
-              className="font-semibold hover:text-[#7B2CBF]"
-            >
-              Login
-            </Link>
-
+          <p className="text-center mt-10">
+            Sudah punya akun? <Link to="/login">Login</Link>
           </p>
 
         </div>
 
       </div>
 
-      {/* FOOTER */}
-      <footer className="bg-white py-8 text-center text-[#1d2a44] text-xl shadow-inner mt-10">
-
+      <footer className="bg-white py-8 text-center">
         © 2026 Smart Bus Ticketing System
-
       </footer>
 
     </div>

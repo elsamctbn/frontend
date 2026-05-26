@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import { useLocation } from 'react-router-dom'
 import {
   useNavigate,
 } from 'react-router-dom'
@@ -9,6 +9,19 @@ import Navbar from "../../components/user/Navbar";
 export default function Search() {
 
   const navigate = useNavigate()
+
+  const location = useLocation()
+    const user = JSON.parse(
+      localStorage.getItem('user') || '{}'
+    )
+
+    const {
+      fromCity,
+      fromTerminal,
+      toCity,
+      toTerminal,
+      tanggal,
+    } = location.state || {}
 
   const isLogin =
     localStorage.getItem('login') === 'true'
@@ -26,18 +39,15 @@ export default function Search() {
     useState<any>(null)
 
   const [nama, setNama] =
-    useState('')
+    useState(user.nama || '')
 
   const [email, setEmail] =
-    useState('')
+    useState(user.email || '')
 
   const [telepon, setTelepon] =
-    useState('')
+    useState(user.telepon || '')
 
   const [tanggalLahir, setTanggalLahir] =
-    useState('')
-
-  const [tanggal, setTanggal] =
     useState('')
 
   const [isStudent, setIsStudent] =
@@ -49,8 +59,8 @@ export default function Search() {
       id: 1,
       fromTime: '05.30',
       toTime: '06.06',
-      from: 'Siantar',
-      to: 'Amplas',
+      from: fromTerminal,
+      to: toTerminal,
       duration: '1 jam 36 menit',
       price: 'Rp 45.000',
     },
@@ -59,8 +69,8 @@ export default function Search() {
       id: 2,
       fromTime: '17.00',
       toTime: '05.00',
-      from: 'Siantar',
-      to: 'Pekanbaru',
+      from: fromTerminal,
+      to: toTerminal,
       duration: '12 jam',
       price: 'Rp 175.000',
     },
@@ -69,8 +79,8 @@ export default function Search() {
       id: 3,
       fromTime: '07.00',
       toTime: '09.00',
-      from: 'Siantar',
-      to: 'Medan',
+      from: fromTerminal,
+      to: toTerminal,
       duration: '2 jam',
       price: 'Rp 70.000',
     },
@@ -99,23 +109,20 @@ export default function Search() {
     )
 
     navigate('/payment', {
-
       state: {
-
         nama,
         email,
         telepon,
         tanggalLahir,
         tanggal,
-
+        fromCity,
+        fromTerminal,
+        toCity,
+        toTerminal,
         kursi: selectedSeat,
-
         isStudent,
-
         totalPrice,
-
       },
-
     })
   }
 
@@ -167,22 +174,22 @@ export default function Search() {
                       {bus.fromTime}
                     </h1>
 
-                    <p className="text-gray-500 mt-3 text-lg">
+                    <p className="text-gray-500 mt-3 text-lg whitespace-nowrap">
                       {bus.from}
                     </p>
 
                   </div>
 
                   {/* GARIS */}
-                  <div className="flex items-center flex-1 min-w-[250px]">
+                  <div className="flex items-center w-full">
 
-                    <div className="h-[2px] bg-gray-300 flex-1"></div>
+                    <div className="h-[2px] bg-gray-300 w-[clamp(100px,50vw,1200px)]"></div>
 
                     <p className="mx-4 text-gray-400 whitespace-nowrap">
                       {bus.duration}
                     </p>
 
-                    <div className="h-[2px] bg-gray-300 flex-1"></div>
+                    <div className="h-[2px] bg-gray-300 w-[clamp(100px,50vw,1200px)]"></div>
 
                   </div>
 
@@ -214,9 +221,7 @@ export default function Search() {
 
                       // CEK LOGIN
                       if (!isLogin) {
-
                         navigate('/login')
-
                         return
                       }
 
@@ -230,26 +235,15 @@ export default function Search() {
 
                       // BUKA MODAL
                       setShowModal(true)
-
                     }}
-
-                    className="mt-6 bg-orange-500 hover:bg-orange-600 transition text-white font-bold text-xl px-8 py-2 rounded-2xl"
-                  >
-
+                    className="mt-6 bg-orange-500 hover:bg-orange-600 transition text-white font-bold text-xl px-8 py-2 rounded-2xl">
                     Pesan
-
                   </button>
-
                 </div>
-
               </div>
-
             </div>
-
           ))}
-
         </div>
-
       </div>
 
       {/* MODAL DATA PENUMPANG */}
@@ -296,12 +290,8 @@ export default function Search() {
                   <input
                     type="email"
                     value={email}
-                    onChange={(e) =>
-                      setEmail(e.target.value)
-                    }
-                    className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
-                  />
-
+                    readOnly
+                    className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"/>
                 </div>
 
                 {/* TELEPON */}
@@ -350,9 +340,7 @@ export default function Search() {
                   <input
                     type="date"
                     value={tanggal}
-                    onChange={(e) =>
-                      setTanggal(e.target.value)
-                    }
+                    readOnly
                     className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
                   />
 
@@ -362,9 +350,7 @@ export default function Search() {
                 <div>
 
                   <label className="block mb-2 font-medium">
-
                     Pelajar/Mahasiswa
-
                   </label>
 
                   <div className="flex gap-10 mt-3">
