@@ -46,24 +46,24 @@ export default function Dashboard() {
 
   return (
 
-    <div className="space-y-8">
+    <div className="space-y-6">
 
       {/* HEADER */}
       <div className="flex justify-between items-center">
 
         <div>
 
-          <h1 className="text-5xl font-bold text-[#1d2a44]">
+          <h1 className="text-4xl font-bold text-[#1d2a44]">
             Dashboard Admin 👋
           </h1>
 
-          <p className="mt-3 text-gray-500 text-lg">
+          <p className="mt-2 text-gray-500 text-lg">
             Selamat datang kembali di Smart Bus Ticketing System
           </p>
 
         </div>
 
-        <div className="bg-white px-6 py-4 rounded-2xl shadow border">
+        <div className="bg-white px-5 py-3 rounded-xl border border-gray-200">
 
           <p className="text-gray-500">
             Selasa, 21 Mei 2026
@@ -80,22 +80,22 @@ export default function Dashboard() {
 
           <div
             key={index}
-            className={`bg-gradient-to-r ${card.color} rounded-3xl p-7 text-white shadow-xl relative overflow-hidden`}
+            className={`bg-gradient-to-r ${card.color} rounded-2xl p-5 text-white shadow-md relative overflow-hidden`}
           >
 
-            <div className="text-5xl mb-5">
+            <div className="text-3xl mb-3">
               {card.icon}
             </div>
 
-            <p className="text-lg opacity-90">
+            <p className="text-sm opacity-90">
               {card.title}
             </p>
 
-            <h1 className="text-5xl font-bold mt-2">
+            <h1 className="text-3xl font-bold mt-1">
               {card.value}
             </h1>
 
-            <div className="absolute -right-6 -bottom-6 text-[120px] opacity-10">
+            <div className="absolute -right-4 -bottom-4 text-[80px] opacity-10">
               {card.icon}
             </div>
 
@@ -112,13 +112,13 @@ export default function Dashboard() {
         <div className="xl:col-span-2 space-y-6">
 
           {/* CHART */}
-          <div className="bg-white rounded-3xl shadow-lg p-8 border">
+              <div className="bg-white rounded-2xl border border-gray-200 p-6">
 
             <div className="flex justify-between items-center mb-8">
 
               <div>
 
-                <h2 className="text-3xl font-bold text-[#1d2a44]">
+                <h2 className="text-2xl font-bold text-[#1d2a44]">
                   Statistik Penjualan
                 </h2>
 
@@ -128,8 +128,7 @@ export default function Dashboard() {
 
               </div>
 
-              <button className="bg-[#7B2CBF] text-white px-5 py-3 rounded-xl">
-                Mingguan
+              <button className="bg-[#7B2CBF] text-white px-4 py-2 rounded-lg text-sm">                Mingguan
               </button>
 
             </div>
@@ -158,15 +157,14 @@ export default function Dashboard() {
           </div>
 
           {/* TABLE */}
-          <div className="bg-white rounded-3xl shadow-lg border p-8">
-
+          <div className="bg-white rounded-2xl border border-gray-200 p-6">
             <div className="flex justify-between items-center mb-8">
 
-              <h2 className="text-3xl font-bold text-[#1d2a44]">
+              <h2 className="text-2xl font-bold text-[#1d2a44]">
                 Jadwal Terbaru
               </h2>
 
-              <button className="text-[#7B2CBF] font-semibold">
+              <button className="text-[#7B2CBF] text-sm font-medium">
                 Lihat Semua →
               </button>
 
@@ -246,13 +244,11 @@ export default function Dashboard() {
         {/* RIGHT */}
         <div className="space-y-6">
 
-          <div className="bg-gradient-to-br from-[#7B2CBF] to-[#B983FF] rounded-3xl p-8 text-white shadow-xl">
-
-            <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center text-4xl mb-6">
-              👨‍💼
+            <div className="bg-gradient-to-br from-[#7B2CBF] to-[#B983FF] rounded-2xl p-6 text-white shadow-md">
+            <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center text-3xl mb-4">              👨‍💼
             </div>
 
-            <h2 className="text-3xl font-bold">Admin</h2>
+            <h2 className="text-2xl font-bold">Admin</h2>
 
             <p className="opacity-80 mt-2">
               Super Administrator
@@ -260,9 +256,8 @@ export default function Dashboard() {
 
           </div>
 
-          <div className="bg-white rounded-3xl shadow-lg border p-8">
-
-            <h2 className="text-3xl font-bold text-[#1d2a44] mb-8">
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+            <h2 className="text-2xl font-bold text-[#1d2a44] mb-6">
               Aktivitas
             </h2>
 

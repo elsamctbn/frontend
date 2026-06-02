@@ -154,12 +154,12 @@ export default function JadwalPage() {
 
   return (
 
-    <div className="p-10">
+    <div className="p-09">
 
       {/* HEADER */}
-      <div className="flex justify-between items-center mb-10">
+      <div className="flex justify-between items-center mb-8">
 
-        <h1 className="text-5xl font-bold text-[#1d2a44]">
+        <h1 className="text-4xl font-bold text-[#1d2a44]">
           Jadwal Bus
         </h1>
 
@@ -182,27 +182,31 @@ export default function JadwalPage() {
       </div>
 
       {/* LIST */}
-      <div className="space-y-6">
+      <div className="space-y-5">
 
         {jadwalList.map((jadwal) => (
 
           <div
             key={jadwal.id}
-            className="bg-white rounded-3xl shadow-md p-6 flex justify-between items-center"
+            className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 flex justify-between items-center hover:shadow-md transition"
           >
 
             {/* LEFT */}
             <div className="flex-1">
 
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-start">
 
                 <div>
 
-                  <h1 className="text-3xl font-bold text-[#1d2a44]">
-                    {jadwal.namaBus}
-                  </h1>
+                  <div className="bg-[#7B2CBF] px-4 py-1.5 rounded-full inline-block mb-3 text-white text-sm font-medium">
+                    🚌 Eldivo
+                  </div>
 
-                  <p className="text-gray-500">
+                  <h2 className="text-xl font-semibold text-[#1d2a44]">
+                    {jadwal.namaBus}
+                  </h2>
+
+                  <p className="text-sm text-gray-500 mt-1">
                     Ekonomi (AC)
                   </p>
 
@@ -210,43 +214,55 @@ export default function JadwalPage() {
 
                 <div className="text-right">
 
-                  <h1 className="font-bold text-xl">
-                    {jadwal.harga}/orang
-                  </h1>
+                  <p className="text-xs text-gray-500">
+                    Harga Tiket
+                  </p>
+
+                  <h3 className="text-lg font-semibold text-[#1d2a44]">
+                    {jadwal.harga}
+                  </h3>
 
                 </div>
 
               </div>
 
               {/* ROUTE */}
-              <div className="flex items-center mt-8">
+              <div className="flex items-center mt-6">
 
                 <div>
-                  <h1 className="text-3xl font-bold">
-                    {jadwal.jam?.split('-')[0]}
-                  </h1>
 
-                  <p className="text-gray-500 mt-2">
+                  <h3 className="text-xl font-semibold text-[#1d2a44]">
+                    {jadwal.jam?.split('-')[0]}
+                  </h3>
+
+                  <p className="text-sm text-gray-500 mt-1">
                     {jadwal.route?.split('-')[0]}
                   </p>
+
                 </div>
 
-                <div className="flex-1 mx-8">
+                <div className="flex-1 mx-6">
+
                   <div className="border-t border-gray-300 relative">
-                    <p className="absolute -top-4 left-1/2 -translate-x-1/2 bg-white px-3 text-gray-400">
+
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white px-3 text-xs text-gray-500">
                       {jadwal.lama}
-                    </p>
+                    </span>
+
                   </div>
+
                 </div>
 
                 <div>
-                  <h1 className="text-3xl font-bold">
-                    {jadwal.jam?.split('-')[1]}
-                  </h1>
 
-                  <p className="text-gray-500 mt-2">
+                  <h3 className="text-xl font-semibold text-[#1d2a44]">
+                    {jadwal.jam?.split('-')[1]}
+                  </h3>
+
+                  <p className="text-sm text-gray-500 mt-1">
                     {jadwal.route?.split('-')[1]}
                   </p>
+
                 </div>
 
               </div>
@@ -254,11 +270,13 @@ export default function JadwalPage() {
             </div>
 
             {/* BUTTON */}
-            <div className="flex flex-col gap-3 ml-10">
+            <div className="flex flex-col gap-2 ml-8">
 
               <button
                 onClick={() => {
+
                   setShowModal(true)
+
                   setEditId(jadwal.id)
 
                   setNamaBus(jadwal.namaBus)
@@ -266,18 +284,22 @@ export default function JadwalPage() {
                   setJam(jadwal.jam)
                   setLama(jadwal.lama)
                   setHarga(jadwal.harga)
+
                 }}
-                className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg font-semibold"
+                className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium min-w-[110px]"
               >
                 🔄 Ubah
               </button>
 
               <button
                 onClick={() => {
+
                   setDeleteId(jadwal.id)
+
                   setShowDelete(true)
+
                 }}
-                className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg font-semibold"
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium min-w-[110px]"
               >
                 🗑 Hapus
               </button>

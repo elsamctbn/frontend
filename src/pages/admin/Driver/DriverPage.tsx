@@ -150,12 +150,12 @@ export default function DriverPage() {
 
   return (
 
-    <div className="p-10">
+    <div className="p-9">
 
       {/* HEADER */}
-      <div className="flex justify-between items-center mb-10">
+      <div className="flex justify-between items-center mb-8">
 
-        <h1 className="text-5xl font-bold text-[#1d2a44]">
+        <h1 className="text-4xl font-bold text-[#1d2a44]">
 
           Data Driver
 
@@ -173,7 +173,7 @@ export default function DriverPage() {
             setNoHp('')
             setAlamat('')
           }}
-          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold shadow"
+        className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow"
         >
 
           + Tambah
@@ -183,112 +183,91 @@ export default function DriverPage() {
       </div>
 
       {/* LIST DRIVER */}
-      <div className="space-y-6">
+      <div className="space-y-5">
 
-        {
-          driverList.map((driver) => (
+        {driverList.map((driver) => (
 
-            <div
-              key={driver.id}
-              className="bg-white rounded-3xl shadow-md p-6 flex justify-between items-center border-2 border-transparent hover:border-blue-500 transition"
-            >
+          <div
+            key={driver.id}
+            className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 flex justify-between items-center hover:shadow-md transition"
+          >
 
-              {/* LEFT */}
-              <div>
+            {/* LEFT */}
+            <div>
 
-                {/* LOGO */}
-                <div className="bg-[#7B2CBF] px-5 py-2 rounded-full inline-block mb-5 text-white font-bold">
-
-                  🚌 Eldivo
-
-                </div>
-
-                <div className="space-y-2 text-lg">
-
-                  <p>
-
-                    Nama Driver :
-                    <span className="font-bold ml-2">
-
-                      {driver.nama}
-
-                    </span>
-
-                  </p>
-
-                  <p>
-
-                    No.hp :
-                    <span className="font-bold ml-2">
-
-                      {driver.nohp}
-
-                    </span>
-
-                  </p>
-
-                  <p>
-
-                    Alamat :
-                    <span className="font-bold ml-2">
-
-                      {driver.alamat}
-
-                    </span>
-
-                  </p>
-
-                </div>
-
+              {/* BADGE */}
+              <div className="bg-[#7B2CBF] px-4 py-1.5 rounded-full inline-block mb-4 text-white text-sm font-medium">
+                🧑‍✈️ Driver Eldivo
               </div>
 
-              {/* RIGHT */}
-              <div className="flex flex-col gap-3">
+              {/* DATA */}
+              <div className="space-y-2 text-base text-gray-700">
 
-                {/* UBAH */}
-                <button
-                  onClick={() => {
+                <p>
+                  Nama Driver :
+                  <span className="font-semibold text-[#1d2a44] ml-2">
+                    {driver.nama}
+                  </span>
+                </p>
 
-                    setShowModal(true)
+                <p>
+                  No. HP :
+                  <span className="font-semibold text-[#1d2a44] ml-2">
+                    {driver.nohp}
+                  </span>
+                </p>
 
-                    setEditId(driver.id)
-
-                    setNamaDriver(driver.nama)
-
-                    setNoHp(driver.nohp)
-
-                    setAlamat(driver.alamat)
-
-                  }}
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg font-semibold"
-                >
-
-                  🔄 Ubah
-
-                </button>
-
-                {/* HAPUS */}
-                <button
-                  onClick={() => {
-
-                    setDeleteId(driver.id)
-
-                    setShowDelete(true)
-
-                  }}
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg font-semibold"
-                >
-
-                  🗑 Hapus
-
-                </button>
+                <p>
+                  Alamat :
+                  <span className="font-semibold text-[#1d2a44] ml-2">
+                    {driver.alamat}
+                  </span>
+                </p>
 
               </div>
 
             </div>
 
-          ))
-        }
+            {/* RIGHT */}
+            <div className="flex flex-col gap-2">
+
+              <button
+                onClick={() => {
+
+                  setShowModal(true)
+
+                  setEditId(driver.id)
+
+                  setNamaDriver(driver.nama)
+
+                  setNoHp(driver.nohp)
+
+                  setAlamat(driver.alamat)
+
+                }}
+                className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium min-w-[110px]"
+              >
+                🔄 Ubah
+              </button>
+
+              <button
+                onClick={() => {
+
+                  setDeleteId(driver.id)
+
+                  setShowDelete(true)
+
+                }}
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium min-w-[110px]"
+              >
+                🗑 Hapus
+              </button>
+
+            </div>
+
+          </div>
+
+        ))}
 
       </div>
 
@@ -298,10 +277,10 @@ export default function DriverPage() {
 
           <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
 
-            <div className="bg-white w-[500px] rounded-3xl p-10">
+            <div className="bg-white w-[500px] rounded-2xl p-10">
 
               {/* TITLE */}
-              <h1 className="text-4xl font-bold text-center mb-10">
+              <h1 className="text-3xl font-bold text-center mb-8">
 
                 {
                   editId !== null
@@ -324,7 +303,7 @@ export default function DriverPage() {
                       e.target.value
                     )
                   }
-                  className="w-full border rounded-xl px-5 py-4 outline-none"
+                  className="w-full border rounded-xl px-4 py-3 outline-none"
                 />
 
                 {/* NO HP */}
@@ -337,7 +316,7 @@ export default function DriverPage() {
                       e.target.value
                     )
                   }
-                  className="w-full border rounded-xl px-5 py-4 outline-none"
+                  className="w-full border rounded-xl px-4 py-3 outline-none"
                 />
 
                 {/* ALAMAT */}
@@ -350,7 +329,7 @@ export default function DriverPage() {
                       e.target.value
                     )
                   }
-                  className="w-full border rounded-xl px-5 py-4 outline-none"
+                  className="w-full border rounded-xl px-4 py-3 outline-none"
                 />
 
               </div>
@@ -402,10 +381,10 @@ export default function DriverPage() {
 
           <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
 
-            <div className="bg-white w-[400px] rounded-3xl p-10">
+            <div className="bg-white w-[400px] rounded-2xl p-8">
 
               {/* TITLE */}
-              <h1 className="text-3xl font-bold text-center mb-10">
+              <h1 className="text-2xl font-bold text-center mb-8">
 
                 Anda yakin ingin menghapus driver?
 
