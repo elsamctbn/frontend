@@ -3,7 +3,7 @@ import {
   useNavigate,
 } from 'react-router-dom'
 
-import logo from '../../assets/logo.png'
+import Navbar from "../../components/user/Navbar";
 
 export default function Ticket() {
 
@@ -15,42 +15,33 @@ export default function Ticket() {
   const bus = JSON.parse(
     localStorage.getItem('selectedBus') || '{}')
 
+  const tickets = [
+    {},
+  ]
+
+  const generateOrderId = () => {
+
+    const chars = 
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+
+    let result = 'ELD-' 
+
+    for (let i = 0; i < 6; i++) {
+
+      result += chars.charAt(
+        Math.floor(Math.random() * chars.length)
+      )
+    }
+
+    return result 
+
+  }
+
   return (
 
     <div className="min-h-screen bg-[#f3f4f6]">
-
-      {/* NAVBAR */}
-      <nav className="bg-[#6A1FB5] px-8 py-4 flex items-center justify-between shadow-md">
-
-        <img
-          src={logo}
-          alt="logo"
-          className="h-12"/>
-
-        <div className="flex items-center gap-10 text-white font-semibold text-xl">
-
-          <Link to="/">
-            Home
-          </Link>
-
-          <Link to="/search">
-            Pesan
-          </Link>
-
-          <Link
-            to="/ticketsaya"
-            className="font-bold">
-            Tiket Saya
-          </Link>
-
-          <Link to="/profile">
-            Profil
-          </Link>
-
-        </div>
-
-      </nav>
-
+        <Navbar/>
+  
       {/* CONTENT */}
       <div className="max-w-8xl mx-auto py-14 px-4">
 
@@ -82,6 +73,10 @@ export default function Ticket() {
                   Tujuan Keberangkatan
                 </th>
 
+                <th className="py-4 text-left">
+                  Status Bayar
+                </th>
+
                 <th></th>
 
               </tr>
@@ -89,11 +84,15 @@ export default function Ticket() {
             </thead>
 
             <tbody>
+              {tickets.map((ticket, index) => (
+                
+              <tr
+                 key={index}
+                  className="border-b"
+                  >
 
-              <tr className="border-b">
-
-                <td className="py-6">
-                  1.
+                <td className= "py-4">
+                {index + 1 }
                 </td>
 
                 <td>
@@ -101,15 +100,14 @@ export default function Ticket() {
                 </td>
 
                 <td>
-                  XYZ-23415780
+                 {generateOrderId()}
                 </td>
 
-                <td>
 
+                <td>
                   {bus?.from}
                   {' → '}
                   {bus?.to}
-
                 </td>
 
                 <td className='font-bold text-green-600'>
@@ -141,9 +139,11 @@ export default function Ticket() {
 
               </tr>
 
+             ))}
+
             </tbody>
 
-          </table>
+           </table>
 
         </div>
 

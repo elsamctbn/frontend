@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function DriverPage() {
 
-  // ================= STATE =================
+  // STATE 
 
   const [showModal, setShowModal] =
     useState(false)
@@ -16,10 +16,9 @@ export default function DriverPage() {
   const [showDelete, setShowDelete] =
     useState(false)
 
-  const [driverList, setDriverList] =
-    useState([
-
-      {
+  const [driverList, setDriverList] = useState(() => {
+    return JSON.parse(localStorage.getItem('driverList')) || [
+        {
         id: 1,
         nama: 'Bagas Pratama',
         nohp: '0856778331',
@@ -39,9 +38,18 @@ export default function DriverPage() {
         nohp: '081278869',
         alamat: 'Jl. Sumber no.10',
       },
+    ]
 
-    ])
+  })
 
+        useEffect(() => {
+          localStorage.setItem(
+            'driverList',
+            JSON.stringify(driverList)
+          )
+        }, [driverList])
+
+        
   const [namaDriver, setNamaDriver] =
     useState('')
 
@@ -51,7 +59,7 @@ export default function DriverPage() {
   const [alamat, setAlamat] =
     useState('')
 
-  // ================= SIMPAN DRIVER =================
+  // SIMPAN DRIVER 
 
   const simpanDriver = () => {
 
@@ -67,7 +75,7 @@ export default function DriverPage() {
       return
     }
 
-    // ================= EDIT =================
+    // EDIT 
     if (editId !== null) {
 
       const updatedDriver =
@@ -94,7 +102,7 @@ export default function DriverPage() {
       setEditId(null)
     }
 
-    // ================= TAMBAH =================
+    //  TAMBAH 
     else {
 
       const newDriver = {
@@ -110,8 +118,8 @@ export default function DriverPage() {
       }
 
       setDriverList([
-        ...driverList,
         newDriver,
+        ...driverList,
       ])
     }
 
@@ -123,7 +131,7 @@ export default function DriverPage() {
     setAlamat('')
   }
 
-  // ================= DELETE =================
+  // DELETE
 
   const confirmDelete = () => {
 

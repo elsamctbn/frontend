@@ -63,7 +63,7 @@ const Home = () => {
     !fromTerminal ||
     !toCity ||
     !toTerminal ||
-    !tanggal
+    !tanggal 
   ) {
     alert('Semua data wajib diisi!')
     return
@@ -86,7 +86,6 @@ const Home = () => {
       toCity,
       toTerminal,
       tanggal,
-
     }
   })
 }
@@ -102,17 +101,17 @@ const Home = () => {
         <div className='max-w-7xl mx-auto px-5 grid md:grid-cols-2 items-center'>
 
           {/* LEFT */}
-          <div className='w-full px-20'>
+          <div className='w-full px-4 md:px-20 md:pl-20'>
 
-            <p className='text-lg'>
+            <p className='text-base md:text-lg'>
               ETA MARBUS
             </p>
 
-            <h1 className='font-bold text-5xl mt-3 w-[550px] leading-tight'>
+            <h1 className='font-bold text-2xl sm:text-4xl md:text-5xl mt-3 max-w-[700px] leading-tight'>
               Book Bus Tickets Easily & Quickly
             </h1>
 
-            <p className='text-2xl mt-6 leading-relaxed w-[550px]'>
+            <p className='text-lg md:text-2xl mt-6 leading-relaxed max-w-[700px]'>
               Bersama Eldivo, nikmati perjalanan yang nyaman,
               aman, dan terpercaya ke berbagai kota tujuan.
             </p>
@@ -120,13 +119,13 @@ const Home = () => {
           </div>
 
           {/* RIGHT */}
-          <div className='hidden md:flex ml-[100px] justify-center'>
+          <div className='hidden md:flex pr-10 lg:pr-20 justify-end'>
             <div className='flex items-center justify-center'>
               
               <img
               src={eldivo}
               alt='Bus Eldivo'
-              className='w-[300px] object-contain drop-shadow-2xl'/>
+              className='w-[220px] md:w-[300px] object-contain drop-shadow-2xl'/>
           </div>
         </div>
       </div>
@@ -434,7 +433,7 @@ const Home = () => {
                   </div>
 
                   {/* CARD 2 */}
-                  <div className='w-[320px] bg-gradient-to-br from-indigo-700 to-blue-500 rounded-[35px] p-8 text-white shadow-2xl hover:-translate-y-3 transition duration-500'>6
+                  <div className='w-[320px] bg-gradient-to-br from-indigo-700 to-blue-500 rounded-[35px] p-8 text-white shadow-2xl hover:-translate-y-3 transition duration-500'>
                     <div className='text-6xl'>
                       💳
                     </div>
@@ -584,4 +583,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home 

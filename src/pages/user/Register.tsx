@@ -18,12 +18,14 @@ export default function Register() {
   //VALIDASI PASSWORD
   const isValidPassword = (password) => {
     const hasNumber = /\d/
-    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/
+    const hasSymbol = /[!@#$%^&*(),.?":{}|<>-]/
+    const hasCapital = /[A-Z]/
 
     return (
-      password.length >= 6 &&
+      password.length >= 8 &&
       hasNumber.test(password) &&
-      hasSymbol.test(password)
+      hasSymbol.test(password) &&
+      hasCapital.test(password)
     )
   }
 
@@ -40,7 +42,7 @@ export default function Register() {
     }
 
     if (!isValidPassword(password)) {
-      alert('Password minimal 6 karakter, harus ada angka & simbol')
+      alert('Password minimal 8 karakter, harus ada angka, simbol, dan huruf kapital')
       return
     }
 
@@ -86,6 +88,7 @@ export default function Register() {
             onChange={(e) => setEmail(e.target.value)}
             className="w-full border px-6 py-5 mb-8 rounded-2xl"
           />
+
 
           <input
             type="password"

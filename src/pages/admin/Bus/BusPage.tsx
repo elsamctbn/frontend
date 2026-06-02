@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function BusPage() {
 
@@ -14,31 +14,35 @@ export default function BusPage() {
   const [showDelete, setShowDelete] =
     useState(false)
 
-  const [busList, setBusList] =
-    useState([
+  const [busList, setBusList] = useState(() => {
+  return JSON.parse(localStorage.getItem('busList')) || [
+    {
+      id: 1,
+      nama: 'Bus Eldivo 1',
+      plat: 'BK 2457 BCD',
+      kapasitas: '40 orang',
+    },
+    {
+      id: 2,
+      nama: 'Bus Eldivo 2',
+      plat: 'BK 7777 ETK',
+      kapasitas: '36 orang',
+    },
+    {
+      id: 3,
+      nama: 'Bus Eldivo 3',
+      plat: 'BK 9088 AED',
+      kapasitas: '40 orang',
+    },
+  ]
+})
 
-      {
-        id: 1,
-        nama: 'Bus Eldivo 1',
-        plat: 'BK 2457 BCD',
-        kapasitas: '40 orang',
-      },
-
-      {
-        id: 2,
-        nama: 'Bus Eldivo 2',
-        plat: 'BK 7777 ETK',
-        kapasitas: '36 orang',
-      },
-
-      {
-        id: 3,
-        nama: 'Bus Eldivo 3',
-        plat: 'BK 9088 AED',
-        kapasitas: '40 orang',
-      },
-
-    ])
+  useEffect(() => {
+  localStorage.setItem(
+    'busList',
+    JSON.stringify(busList)
+  )
+}, [busList]) 
 
   const [namaBus, setNamaBus] =
     useState('')
@@ -49,7 +53,7 @@ export default function BusPage() {
   const [kapasitas, setKapasitas] =
     useState('')
 
-  // ================= SIMPAN BUS =================
+  //  SIMPAN BUS 
 
   const simpanBus = () => {
 
@@ -65,7 +69,7 @@ export default function BusPage() {
       return
     }
 
-    // ================= EDIT =================
+    //  EDIT 
     if (editId !== null) {
 
       const updatedBus =
@@ -92,7 +96,7 @@ export default function BusPage() {
       setEditId(null)
     }
 
-    // ================= TAMBAH =================
+    //  TAMBAH 
     else {
 
       const newBus = {
@@ -108,8 +112,8 @@ export default function BusPage() {
       }
 
       setBusList([
-        ...busList,
         newBus,
+        ...busList,
       ])
     }
 
@@ -121,7 +125,7 @@ export default function BusPage() {
     setKapasitas('')
   }
 
-  // ================= DELETE =================
+  // DELETE 
 
   const confirmDelete = () => {
 

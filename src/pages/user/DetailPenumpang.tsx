@@ -9,6 +9,7 @@ const DetailPenumpang = () => {
   const [telepon, setTelepon] = useState("");
   const [tanggalLahir, setTanggalLahir] = useState("");
   const [selectedSeat, setSelectedSeat] = useState("");
+  const [jumlahPenumpang, setJumlahPenumpang] = useState("");
 
   const handleNext = () => {
     navigate("/payment", {
@@ -17,6 +18,7 @@ const DetailPenumpang = () => {
         email: email,
         telepon: telepon,
         tanggalLahir: tanggalLahir,
+        jumlahPenumpang: jumlahPenumpang,
         kursi: selectedSeat,
       },
     });

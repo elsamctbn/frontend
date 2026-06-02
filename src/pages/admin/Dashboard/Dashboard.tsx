@@ -1,31 +1,43 @@
 export default function Dashboard() {
 
+  const busList =
+    JSON.parse(localStorage.getItem('busList')) || []
+
+  const driverList =
+    JSON.parse(localStorage.getItem('driverList')) || [] 
+
+  const jadwalList =
+    JSON.parse(localStorage.getItem('jadwalList')) || []
+
+  const penumpangList =
+    JSON.parse(localStorage.getItem('penumpangList')) || []
+
   const cards = [
 
     {
       title: 'Total Bus',
-      value: 12,
+      value: busList.length,
       color: 'from-violet-500 to-purple-600',
       icon: '🚌',
     },
 
     {
       title: 'Total Driver',
-      value: 8,
+      value: driverList.length,
       color: 'from-blue-500 to-cyan-500',
       icon: '🧑‍✈️',
     },
 
     {
       title: 'Total Jadwal',
-      value: 24,
+      value: jadwalList.length,
       color: 'from-green-500 to-emerald-500',
       icon: '📅',
     },
 
     {
       title: 'Total Penumpang',
-      value: 120,
+      value: penumpangList.length,
       color: 'from-orange-400 to-orange-500',
       icon: '👥',
     },

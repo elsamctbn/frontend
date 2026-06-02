@@ -138,7 +138,18 @@ export default function Profile() {
   }
 
   const handleLogout = () => {
+
+    const user = localStorage.getItem('user')
+
+    if (!user) {
+      alert('Akun tidak terdaftar, tidak bisa logout')
+      return 
+    }
+
     localStorage.removeItem('login')
+    localStorage.removeItem('user')
+    localStorage.removeItem('profileData')
+    localStorage.removeItem('selectedBus')
     localStorage.removeItem('role')
     window.location.href ='/'
   }
@@ -268,8 +279,10 @@ export default function Profile() {
             </div>
 
             {/* TANGGAL DAN ALAMAT */}
-            <div className="grid grid-cols-2 gap-6">
-
+            <div className="grid grid-cols-2 gap-6 items-center">
+              <label className='font-semibold text-slate-600 mb-2 block py-4'>
+               Tanggal Lahir
+               
               <input
                 type="date"
                 value={tanggalLahir}
@@ -280,6 +293,7 @@ export default function Profile() {
                   )
                 }
                 className="w-full bg-gray-100 rounded-xl px-5 py-4 outline-none"/>
+              </label>
 
               <textarea
                 placeholder="Alamat"

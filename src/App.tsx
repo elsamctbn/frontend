@@ -2,6 +2,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  Navigate,
 } from 'react-router-dom'
 
 import Home from './pages/user/Home'
@@ -17,9 +18,13 @@ import MainLayout from './components/layout/MainLayout'
 import Dashboard from './pages/admin/Dashboard/Dashboard'
 import AdminProfile from './pages/admin/Profile/AdminProfile'
 import AdminSettings from './pages/admin/Settings/AdminSettings'
+import BusPage from './pages/admin/Bus/BusPage'
+import DriverPage from './pages/admin/Driver/DriverPage'
 
 function App() {
-
+const isAdminLogin =
+  localStorage.getItem('login') === 'true' &&
+  localStorage.getItem('role') === 'admin'
   return (
 
     <BrowserRouter>
@@ -76,8 +81,12 @@ function App() {
 
         <Route
           path="/admin"
-          element={<MainLayout />}
-        >
+          element={
+            isAdminLogin
+              ? <MainLayout />
+              : <Navigate to="/login" />
+          }
+         >
 
           {/* DASHBOARD */}
           <Route
@@ -95,6 +104,18 @@ function App() {
           <Route
             path="settings"
             element={<AdminSettings />}
+          />
+
+          {/* BUS */}
+          <Route
+            path="bus"
+            element={<BusPage/>}
+          />
+
+          {/* DRIVER */}
+          <Route
+            path="Driver"
+            element={<DriverPage/>}
           />
 
         </Route>

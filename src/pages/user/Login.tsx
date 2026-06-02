@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useEffect } from 'react'
 
 import {
   Link,
@@ -9,73 +10,70 @@ export default function Login() {
 
   const navigate = useNavigate()
 
-  // UNTUK DATA DUMMY
-  const dummyUser = {
-  nama: 'Putri',
-  email: 'putri@gmail.com',
-  telepon: '08123456789',
-  password: '123456!',
-  }
-
-  localStorage.setItem(
-    'user',
-    JSON.stringify(dummyUser)
-  )
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [role, setRole] = useState('user')
+  const [logoutMessage, setLogoutMessage] = useState('')
 
-  // VALIDASI EMAIL
-  const isValidEmail = (email) => {
-    return email.endsWith("@gmail.com")
+  useEffect(() => {
+  const msg = localStorage.getItem('logoutMessage')
+
+  if (msg) {
+    setLogoutMessage(msg)
+    localStorage.removeItem('logoutMessage')
   }
-
-  // VALIDASI PASSWORD
-  const isValidPassword = (password) => {
-    const hasNumber = /\d/
-    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/
-
-    return (
-      password.length >= 6 &&
-      hasNumber.test(password) &&
-      hasSymbol.test(password)
-    )
-  }
+}, [])
 
   const handleLogin = () => {
 
-  // AMBIL DATA USER DARI REGISTER
   const savedUser =
     JSON.parse(localStorage.getItem('user'))
 
-  // KALAU BELUM REGISTER
-  if (!savedUser) {
-    alert('Silahkan register dulu!')
-    return
+    // UNTUK DATA DUMMY ADMIN
+  const adminEmail = localStorage.getItem('adminEmail')
+  const adminPassword = localStorage.getItem('adminPassword')
+
+    // LOGIN ADMIN
+    if (
+      role === 'admin' &&
+      email === adminEmail &&
+      password === adminPassword
+    ) {
+      localStorage.setItem('login', 'true')
+      localStorage.setItem('role', 'admin')
+
+      const totalLogin =
+        Number(localStorage.getItem('totalLogin')) || 0
+
+      localStorage.setItem(
+        'totalLogin',
+         totalLogin + 1
+      )
+
+      navigate('/admin/dashboard')
+      return
+      }
+
+    // LOGIN USER
+    if (!savedUser) {
+      alert('Silahkan register terlebih dahulu!')
+      return
+    }
+
+    if (
+      email !== savedUser.email ||
+      password !== savedUser.password
+    ) {
+      alert('Email atau Password salah!')
+      return
+    }
+
+    localStorage.setItem('login', 'true')
+    localStorage.setItem('role', 'user')
+
+    navigate('/')
   }
 
-  // CEK EMAIL DAN PASSWORD
-  if (
-    email !== savedUser.email ||
-    password !== savedUser.password
-  ) {
-    alert('Email atau Password salah!')
-    return
-  }
-
-  // LOGIN BERHASIL
-  localStorage.setItem('login', 'true')
-  localStorage.setItem('role', role)
-
-  // PINDAH HALAMAN
-  if (role === 'admin') {
-    navigate('/admin/dashboard')
-  } else {
-    navigate('/search')
-  }
-
-}
 
   return (
 
@@ -121,6 +119,12 @@ export default function Login() {
 
           </div>
 
+              {logoutMessage && (
+                <div className="mb-6 p-3 bg-green-100 text-green-700 rounded-xl text-center">
+                  {logoutMessage}
+                </div>
+              )}
+
           {/* EMAIL */}
           <input
             type="email"
@@ -138,7 +142,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             className="w-full border border-gray-300 rounded-2xl px-6 py-5 text-xl outline-none mb-10"
           />
-
+          
           {/* BUTTON LOGIN */}
           <button
             onClick={handleLogin}
