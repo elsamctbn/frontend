@@ -20,108 +20,52 @@ import AdminProfile from './pages/admin/Profile/AdminProfile'
 import AdminSettings from './pages/admin/Settings/AdminSettings'
 import BusPage from './pages/admin/Bus/BusPage'
 import DriverPage from './pages/admin/Driver/DriverPage'
+import JadwalPage from './pages/admin/Jadwal/JadwalPage'
+import LaporanPage from './pages/admin/Bus/Laporan/LaporanPage'
 
 function App() {
-const isAdminLogin =
-  localStorage.getItem('login') === 'true' &&
-  localStorage.getItem('role') === 'admin'
+
+  const isAdmin =
+    localStorage.getItem('login') === 'true' &&
+    localStorage.getItem('role') === 'admin'
+
   return (
-
     <BrowserRouter>
-
       <Routes>
 
-        {/* HOME */}
-        <Route
-          path="/"
-          element={<Home />}
-        />
+        {/* USER ROUTES */}
+        <Route path="/" element={<Home />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/ticketsaya" element={<Ticket />} />
+        <Route path="/ticketdetail" element={<TicketDetail />} />
 
-        {/* SEARCH */}
+        {/* ADMIN ROUTES (FIX FINAL) */}
         <Route
-          path="/search"
-          element={<Search />}
-        />
-
-        {/* LOGIN */}
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-        {/* REGISTER */}
-        <Route
-          path="/register"
-          element={<Register />}
-        />
-
-        {/* PAYMENT */}
-        <Route
-          path="/payment"
-          element={<Payment />}
-        />
-
-        {/* PROFILE */}
-        <Route
-          path="/profile"
-          element={<Profile />}
-        />
-
-        {/* TIKET SAYA */}
-        <Route
-          path="/ticketsaya"
-          element={<Ticket />}
-        />
-
-        {/* DETAIL TIKET */}
-        <Route
-          path="/ticketdetail"
-          element={<TicketDetail />}
-        />
-
-        <Route
-          path="/admin"
+          path="/admin/*"
           element={
-            isAdminLogin
-              ? <MainLayout />
-              : <Navigate to="/login" />
+            isAdmin ? <MainLayout /> : <Navigate to="/login" />
           }
-         >
+        >
 
-          {/* DASHBOARD */}
-          <Route
-            path="dashboard"
-            element={<Dashboard />}
-          />
-
-          {/* PROFILE ADMIN */}
-          <Route
-            path="profile"
-            element={<AdminProfile />}
-          />
-
-          {/* SETTINGS ADMIN */}
-          <Route
-            path="settings"
-            element={<AdminSettings />}
-          />
-
-          {/* BUS */}
-          <Route
-            path="bus"
-            element={<BusPage/>}
-          />
-
-          {/* DRIVER */}
-          <Route
-            path="Driver"
-            element={<DriverPage/>}
-          />
+          <Route index element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="profile" element={<AdminProfile />} />
+          <Route path="settings" element={<AdminSettings />} />
+          <Route path="bus" element={<BusPage />} />
+          <Route path="driver" element={<DriverPage />} />
+          <Route path="jadwal" element={<JadwalPage />} />
+          <Route path="laporan" element={<LaporanPage />} />
 
         </Route>
 
-      </Routes>
+        {/* fallback */}
+        <Route path="*" element={<Navigate to="/" />} />
 
+      </Routes>
     </BrowserRouter>
   )
 }

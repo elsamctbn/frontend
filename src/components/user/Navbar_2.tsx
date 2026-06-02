@@ -53,7 +53,7 @@ const Navbar = () => {
 
             {/* TIKET */}
             <Link
-              to='/ticket'
+              to='/ticketsaya'
               className='hover:text-yellow-300 transition duration-300'
             >
 

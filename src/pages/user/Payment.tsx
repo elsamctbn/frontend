@@ -472,12 +472,12 @@ export default function Payment() {
 
                 onClick={() => {
 
-                  // SAVE TICKET
-                  localStorage.setItem(
+                  const oldTickets = JSON.parse(
+                  localStorage.getItem('tickets') || '[]'
+                  )
 
-                    'ticketData',
-
-                    JSON.stringify({
+                   const newTicket = {
+                      orderId: 'ELD-' + Date.now(),
                       nama: data?.nama,
                       email: data?.email,
                       telepon: data?.telepon,
@@ -487,9 +487,14 @@ export default function Payment() {
                       totalPrice,
                       isStudent: data?.isStudent,
                       bus: selectedBus,
-                    })
-
+                    }
+                  
+                  oldTickets.push(newTicket)
+                  localStorage.setItem(
+                    'tickets',
+                    JSON.stringify(oldTickets)
                   )
+                  
                   navigate('/ticketsaya')
                 }}
 

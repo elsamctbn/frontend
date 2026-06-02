@@ -9,17 +9,7 @@ export default function Ticket() {
 
   const navigate = useNavigate()
 
-  const data = JSON.parse(
-    localStorage.getItem('ticketData') || '{}')
-
-  const bus = JSON.parse(
-    localStorage.getItem('selectedBus') || '{}')
-
-  const tickets = [
-    {},
-  ]
-
-  const generateOrderId = () => {
+   const generateOrderId = () => {
 
     const chars = 
       'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
@@ -36,6 +26,12 @@ export default function Ticket() {
     return result 
 
   }
+
+  const tickets = JSON.parse(
+  localStorage.getItem('tickets') || '[]'
+)
+
+console.log('TICKETS = ', tickets)
 
   return (
 
@@ -96,18 +92,18 @@ export default function Ticket() {
                 </td>
 
                 <td>
-                  {data?.tanggal}
+                   {ticket?.tanggal}
                 </td>
 
                 <td>
-                 {generateOrderId()}
+                {ticket?.orderId}
                 </td>
 
 
                 <td>
-                  {bus?.from}
-                  {' → '}
-                  {bus?.to}
+                 {ticket?.bus?.from}
+                 {' → '}
+                 {ticket?.bus?.to}
                 </td>
 
                 <td className='font-bold text-green-600'>
@@ -121,11 +117,7 @@ export default function Ticket() {
                       navigate(
                         '/ticketdetail',
                         {
-                          state: {
-                            ...data,
-                            bus,
-                          },
-
+                          state: ticket
                         }
                       )
 

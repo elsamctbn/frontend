@@ -184,11 +184,9 @@ export default function Search() {
               </div>
 
               {/* ISI */}
-              <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
-
+                <div className="grid grid-cols-[1fr_250px] gap-10 items-center">
                 {/* KIRI */}
-                <div className="flex items-center gap-10 flex-1">
-
+                  <div className="flex items-center gap-6 min-w-0">
                   {/* BERANGKAT */}
                   <div>
 
@@ -205,14 +203,12 @@ export default function Search() {
                   {/* GARIS */}
                   <div className="flex items-center w-full">
 
-                    <div className="h-[2px] bg-gray-300 w-[clamp(100px,50vw,1200px)]"></div>
-
+                    <div className="h-[2px] bg-gray-300 flex-1"></div>
                     <p className="mx-4 text-gray-400 whitespace-nowrap">
                       {bus.duration}
                     </p>
 
-                    <div className="h-[2px] bg-gray-300 w-[clamp(100px,50vw,1200px)]"></div>
-
+                  <div className="h-[2px] bg-gray-300 flex-1"></div>
                   </div>
 
                   {/* TIBA */}
@@ -231,8 +227,7 @@ export default function Search() {
                 </div>
 
                 {/* KANAN */}
-                <div className="flex flex-col items-end justify-start">
-
+                  <div className="flex flex-col items-end gap-4">
                   <h1 className="text-xl font-bold">
                     {bus.price}/orang
                   </h1>
