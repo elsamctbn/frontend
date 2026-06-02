@@ -177,7 +177,7 @@ return (
       <div key={bus.id} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex justify-between items-center hover:shadow-md transition">
 
           {/* LEFT */}
-          <div classname="flex-1">
+          <div>
 
             <div className="bg-[#7B2CBF] px-4 py-1.5 rounded-full inline-block mb-4 text-white text-sm font-semibold">
               🚌 Eldivo
