@@ -13,9 +13,9 @@ import Register from './pages/user/Register'
 import MainLayout from './components/layout/MainLayout'
 import Dashboard from './pages/admin/Dashboard/Dashboard'
 import AdminProfile from './pages/admin/Profile/AdminProfile'
-import AdminSettings from './pages/admin/Settings/AdminSettings'
 import BusPage from './pages/admin/Bus/BusPage'
 import DriverPage from './pages/admin/Driver/DriverPage'
+import RutePage from './pages/admin/Rute/RutePage' 
 import JadwalPage from './pages/admin/Jadwal/JadwalPage'
 import LaporanPage from './pages/admin/Bus/Laporan/LaporanPage'
 
@@ -86,9 +86,9 @@ function AppRoutes() {
         <Route index element={<Dashboard />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="profile" element={<AdminProfile />} />
-        <Route path="settings" element={<AdminSettings />} />
         <Route path="bus" element={<BusPage />} />
         <Route path="driver" element={<DriverPage />} />
+        <Route path="rute" element={<RutePage />} />
         <Route path="jadwal" element={<JadwalPage />} />
         <Route path="laporan" element={<LaporanPage />} />
       </Route>

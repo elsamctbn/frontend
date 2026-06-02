@@ -25,12 +25,17 @@ const Sidebar = () => {
     },
 
     {
+      name: 'Rute',
+      path: '/admin/rute',
+    },
+
+    {
       name: 'Jadwal',
       path: '/admin/jadwal',
     },
 
     {
-      name: 'Laporan',
+      name: 'Riwayat Penjualan',
       path: '/admin/laporan',
     },
 

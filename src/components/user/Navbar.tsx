@@ -45,14 +45,6 @@ const Navbar = () => {
               Home
             </Link>
 
-            {/* PESAN */}
-            <Link
-              to='/search'
-              className='hover:text-yellow-300 transition duration-300'
-            >
-              Pesan
-            </Link>
-
             {/* TIKET */}
             <Link
               to='/ticketsaya'
