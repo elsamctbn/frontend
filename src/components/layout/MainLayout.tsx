@@ -120,22 +120,6 @@ export default function MainLayout() {
 
                     </button>
 
-                    {/* PENGATURAN */}
-                    <button
-                      onClick={() => {
-
-                        navigate('/admin/settings')
-
-                        setShowProfile(false)
-
-                      }}
-                      className="w-full text-left px-4 py-3 rounded-xl hover:bg-gray-100 transition font-semibold text-[#1d2a44]"
-                    >
-
-                      ⚙ Pengaturan
-
-                    </button>
-
                     {/* LOGOUT */}
                     <button
                       onClick={handleLogout}
