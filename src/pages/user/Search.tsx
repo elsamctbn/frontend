@@ -33,7 +33,18 @@ export default function Search() {
     useState(false)
 
   const [selectedSeat, setSelectedSeat] =
-    useState('')
+    useState<string[]>([])
+
+  const [bookedSeats, setBookedSeats] = 
+    useState<string[]>(() => {
+
+    const savedSeats = 
+      localStorage.getItem('bookedSeats')
+    
+    return savedSeats
+      ? JSON.parse(savedSeats)
+      : []
+    })
 
   const [selectedBus, setSelectedBus] =
     useState<any>(null)
@@ -47,8 +58,19 @@ export default function Search() {
   const [telepon, setTelepon] =
     useState(user.telepon || '')
 
-  const [tanggalLahir, setTanggalLahir] =
-    useState('')
+  const [tanggalLahir, setTanggalLahir] = useState('')
+
+  const handleTanggalLahir = (e) => {
+    const selectedDate = e.target.value 
+    const today = new Date().toISOString().split('T')[0]
+
+    if (selectedDate >= today) {
+      alert('Tanggal lahir tidak valid')
+      return 
+    }
+    
+    setTanggalLahir(selectedDate)
+  }
 
   const [isStudent, setIsStudent] =
     useState(true)
@@ -89,7 +111,6 @@ export default function Search() {
 
   // NEXT
   const handleNext = () => {
-
     const hargaAsli =
       parseInt(
         selectedBus.price
@@ -97,11 +118,12 @@ export default function Search() {
           .replace('.', '')
       )
 
-    const totalPrice =
+      const hargaPerOrang =
+        isStudent 
+          ? hargaAsli - 10000
+          : hargaAsli
 
-      isStudent
-        ? hargaAsli - 10000
-        : hargaAsli
+      const totalPrice = hargaPerOrang
 
     localStorage.setItem(
       'selectedBus',
@@ -162,11 +184,9 @@ export default function Search() {
               </div>
 
               {/* ISI */}
-              <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
-
+                <div className="grid grid-cols-[1fr_250px] gap-10 items-center">
                 {/* KIRI */}
-                <div className="flex items-center gap-10 flex-1">
-
+                  <div className="flex items-center gap-6 min-w-0">
                   {/* BERANGKAT */}
                   <div>
 
@@ -183,14 +203,12 @@ export default function Search() {
                   {/* GARIS */}
                   <div className="flex items-center w-full">
 
-                    <div className="h-[2px] bg-gray-300 w-[clamp(100px,50vw,1200px)]"></div>
-
+                    <div className="h-[2px] bg-gray-300 flex-1"></div>
                     <p className="mx-4 text-gray-400 whitespace-nowrap">
                       {bus.duration}
                     </p>
 
-                    <div className="h-[2px] bg-gray-300 w-[clamp(100px,50vw,1200px)]"></div>
-
+                  <div className="h-[2px] bg-gray-300 flex-1"></div>
                   </div>
 
                   {/* TIBA */}
@@ -209,8 +227,7 @@ export default function Search() {
                 </div>
 
                 {/* KANAN */}
-                <div className="flex flex-col items-end justify-start">
-
+                  <div className="flex flex-col items-end gap-4">
                   <h1 className="text-xl font-bold">
                     {bus.price}/orang
                   </h1>
@@ -322,25 +339,7 @@ export default function Search() {
                   <input
                     type="date"
                     value={tanggalLahir}
-                    onChange={(e) =>
-                      setTanggalLahir(e.target.value)
-                    }
-                    className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
-                  />
-
-                </div>
-
-                {/* TANGGAL */}
-                <div>
-
-                  <label className="block mb-2 font-medium">
-                    Tanggal Keberangkatan
-                  </label>
-
-                  <input
-                    type="date"
-                    value={tanggal}
-                    readOnly
+                    onChange={handleTanggalLahir}
                     className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
                   />
 
@@ -392,6 +391,23 @@ export default function Search() {
               </div>
 
               {/* KANAN */}
+               <div className="space-y-6">
+                
+              {/* TANGGAL BERANGKAT */}
+                <div>
+
+                  <label className="block mb-2 font-medium">
+                    Tanggal Keberangkatan
+                  </label>
+
+                  <input
+                    type="date"
+                    value={tanggal}
+                    readOnly
+                    className="w-full bg-gray-100 rounded-xl px-4 py-3 outline-none"
+                  />
+                </div>
+
               <div>
 
                 <label className="block mb-2 font-medium">
@@ -406,8 +422,8 @@ export default function Search() {
                 >
 
                   {
-                    selectedSeat
-                      ? `Kursi ${selectedSeat}`
+                    selectedSeat.length > 0
+                      ? selectedSeat.join(', ')
                       : 'Pilih Kursi'
                   }
 
@@ -416,6 +432,7 @@ export default function Search() {
               </div>
 
             </div>
+           </div> 
 
             {/* BUTTON */}
             <div className="flex items-center justify-center gap-10 mt-12">
@@ -508,18 +525,33 @@ export default function Search() {
 
                       <button
                         key={i}
-                        onClick={() =>
-                          setSelectedSeat(seat)
-                        }
+                        disabled={bookedSeats.includes(seat)}
+                        onClick={() => {
+
+                      if (selectedSeat.includes(seat)) {
+                          setSelectedSeat(
+                          selectedSeat.filter(
+                            s => s !== seat
+                          )
+                        )
+                        return
+                      }
+                      setSelectedSeat([
+                        ...selectedSeat,
+                        seat
+                      ])
+                    }}
                         className={`border rounded-lg py-2 font-bold transition
 
                         ${
-                          selectedSeat === seat
+                          bookedSeats.includes(seat)
+                            ? 'bg-gray-400 text-white cursor-not-allowed'
+                            :  selectedSeat.includes(seat)
                             ? 'bg-[#7B2CBF] text-white border-[#7B2CBF]'
                             : 'hover:bg-gray-100'
                         }`}
                       >
-
+                        
                         {seat}
 
                       </button>
@@ -559,13 +591,29 @@ export default function Search() {
 
                     <button
                       key={i}
-                      onClick={() =>
-                        setSelectedSeat(seat)
-                      }
-                      className={`border rounded-lg py-2 font-bold transition
+                      disabled={bookedSeats.includes(seat)}
+                      onClick={() => {
 
+                        if (selectedSeat.includes(seat)) {
+                          setSelectedSeat(
+                            selectedSeat.filter(
+                              s => s !== seat
+                            )
+                          )
+                          return
+                        }
+
+                        setSelectedSeat([
+                          ...selectedSeat,
+                          seat
+                        ])
+                      }}
+
+                      className={`border rounded-lg py-2 font-bold transition
                       ${
-                        selectedSeat === seat
+                        bookedSeats.includes(seat)
+                          ? 'bg-gray-400 text-white cursor-not-allowed'
+                          :  selectedSeat.includes(seat)
                           ? 'bg-[#7B2CBF] text-white border-[#7B2CBF]'
                           : 'hover:bg-gray-100'
                       }`}
@@ -595,13 +643,27 @@ export default function Search() {
 
                   <button
                     key={i}
-                    onClick={() =>
-                      setSelectedSeat(seat)
-                    }
-                    className={`border rounded-lg py-2 font-bold transition
+                    disabled={bookedSeats.includes(seat)}
+                    onClick={() => {
+                      if (selectedSeat.includes(seat)) {
+                        setSelectedSeat(
+                          selectedSeat.filter(
+                            s => s !== seat
+                          )
+                        )
+                        return
+                      }
 
+                      setSelectedSeat([
+                        ...selectedSeat,
+                        seat
+                      ])
+                    }}
+                    className={`border rounded-lg py-2 font-bold transition
                     ${
-                      selectedSeat === seat
+                      bookedSeats.includes(seat)
+                        ? 'bg-gray-400 text-white cursor-not-allowed'
+                        :  selectedSeat.includes(seat)
                         ? 'bg-[#7B2CBF] text-white border-[#7B2CBF]'
                         : 'hover:bg-gray-100'
                     }`}
@@ -617,15 +679,27 @@ export default function Search() {
 
             </div>
 
-            {/* BUTTON */}
+            {/* BUTTON PILIH */}
             <div className="flex justify-center mt-10">
 
               <button
-                onClick={() =>
-                  setShowSeatModal(false)
-                }
-                className="bg-[#7B2CBF] hover:bg-[#6A1FB5] transition text-white px-10 py-3 rounded-xl text-xl font-bold"
-              >
+                  onClick={() => {
+                    const updatedSeats = [
+                      ...bookedSeats,
+                      ...selectedSeat
+                    ]
+
+                    setBookedSeats(updatedSeats)
+
+                    localStorage.setItem(
+                      'bookedSeats',
+                      JSON.stringify(updatedSeats)
+                    )
+
+                    setShowSeatModal(false)
+                  }}
+          
+                className="bg-[#7B2CBF] hover:bg-[#6A1FB5] transition text-white px-10 py-3 rounded-xl text-xl font-bold">
                 Pilih
               </button>
 

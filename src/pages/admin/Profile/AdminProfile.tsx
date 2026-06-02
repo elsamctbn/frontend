@@ -2,14 +2,20 @@ import { useState } from 'react'
 
 export default function AdminProfile() {
 
-  const [nama, setNama] =
-    useState('Admin Eldivo')
+  const [nama, setNama] = useState(
+  localStorage.getItem('adminNama') ||
+  'Putra Hutapea'
+)
 
-  const [email, setEmail] =
-    useState('admin@gmail.com')
+const [email, setEmail] = useState(
+  localStorage.getItem('adminEmail') ||
+  'admineldivo@gmail.com'
+)
 
-  const [password, setPassword] =
-    useState('admin123')
+const [password, setPassword] = useState(
+  localStorage.getItem('adminPassword') ||
+  'AdminEldivo123!'
+)
 
   const [showPassword, setShowPassword] =
     useState(false)
@@ -17,10 +23,38 @@ export default function AdminProfile() {
   // SAVE
   const handleSave = () => {
 
+      localStorage.setItem(
+      'adminNama',
+      nama
+    )
+
+    localStorage.setItem(
+      'adminEmail',
+      email
+    )
+
+    localStorage.setItem(
+      'adminPassword',
+      password
+    )
+
     alert(
       'Profil berhasil diperbarui!'
     )
   }
+
+  const buses = JSON.parse(
+    localStorage.getItem('busList') || '[]'
+  )
+  const drivers = JSON.parse(
+    localStorage.getItem('driverList') || '[]'
+  )
+
+  const totalLogin =
+  Number(localStorage.getItem('totalLogin')) || 0
+  
+  const totalLogout =
+  Number(localStorage.getItem('totalLogout')) || 0
 
   return (
 
@@ -55,9 +89,7 @@ export default function AdminProfile() {
 
             {/* FOTO */}
             <div className="w-[130px] h-[130px] rounded-full bg-white border-[6px] border-white shadow-xl flex items-center justify-center text-[#7B2CBF] text-6xl font-bold">
-
-              A
-
+              {nama.charAt(0)}
             </div>
 
           </div>
@@ -71,9 +103,7 @@ export default function AdminProfile() {
           <div className="mb-12">
 
             <h1 className="text-4xl font-bold text-[#1d2a44]">
-
-              Admin Eldivo
-
+              {nama}
             </h1>
 
             <p className="text-gray-500 text-xl mt-2">
@@ -111,9 +141,7 @@ export default function AdminProfile() {
             <div>
 
               <label className="block text-lg font-semibold mb-3 text-[#1d2a44]">
-
-                Email
-
+                  {email}
               </label>
 
               <input
@@ -201,70 +229,34 @@ export default function AdminProfile() {
         <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition">
 
           <div className="w-16 h-16 rounded-2xl bg-[#7B2CBF]/10 flex items-center justify-center text-3xl mb-6">
-
             👤
-
           </div>
 
           <h2 className="text-2xl font-bold text-[#1d2a44]">
-
             Total Login
-
           </h2>
 
           <p className="text-5xl font-bold text-[#7B2CBF] mt-4">
-
-            128
-
+              {totalLogin}
           </p>
 
         </div>
-
-        {/* BUS */}
+        {/* LOGOUT */}
         <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition">
 
-          <div className="w-16 h-16 rounded-2xl bg-[#7B2CBF]/10 flex items-center justify-center text-3xl mb-6">
-
-            🚌
-
-          </div>
-
-          <h2 className="text-2xl font-bold text-[#1d2a44]">
-
-            Bus Aktif
-
-          </h2>
-
-          <p className="text-5xl font-bold text-[#7B2CBF] mt-4">
-
-            12
-
-          </p>
-
+        <div className="w-16 h-16 rounded-2xl bg-red-100 flex items-center justify-center text-3xl mb-6">
+          🚪
         </div>
 
-        {/* JADWAL */}
-        <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition">
+        <h2 className="text-2xl font-bold text-[#1d2a44]">
+          Total Logout
+        </h2>
 
-          <div className="w-16 h-16 rounded-2xl bg-[#7B2CBF]/10 flex items-center justify-center text-3xl mb-6">
+        <p className="text-5xl font-bold text-red-500 mt-4">
+          {totalLogout}
+        </p>
 
-            📅
-
-          </div>
-
-          <h2 className="text-2xl font-bold text-[#1d2a44]">
-
-            Jadwal Aktif
-
-          </h2>
-
-          <p className="text-5xl font-bold text-[#7B2CBF] mt-4">
-
-            24
-
-          </p>
-
-        </div>
+      </div>
 
       </div>
 

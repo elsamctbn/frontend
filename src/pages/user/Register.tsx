@@ -10,50 +10,44 @@ export default function Register() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  //VALIDASI EMAIL
-  const isValidEmail = (email) => {
-    return email.endsWith('@gmail.com')
-  }
+  const isValidEmail = (email) => email.endsWith('@gmail.com')
 
-  //VALIDASI PASSWORD
   const isValidPassword = (password) => {
     const hasNumber = /\d/
-    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/
+    const hasSymbol = /[!@#$%^&*(),.?":{}|<>-]/
+    const hasCapital = /[A-Z]/
 
     return (
-      password.length >= 6 &&
+      password.length >= 8 &&
       hasNumber.test(password) &&
-      hasSymbol.test(password)
+      hasSymbol.test(password) &&
+      hasCapital.test(password)
     )
   }
 
   const handleRegister = () => {
 
-    if (!nama) {
-      alert('Nama wajib diisi')
-      return
-    }
+    if (!nama) return alert('Nama wajib diisi')
+    if (!isValidEmail(email)) return alert('Email harus @gmail.com')
+    if (!isValidPassword(password))
+      return alert('Password minimal 8 karakter + angka + simbol + huruf besar')
 
-    if (!isValidEmail(email)) {
-      alert('Email harus menggunakan @gmail.com')
-      return
-    }
+    let users = JSON.parse(localStorage.getItem('users')) || []
 
-    if (!isValidPassword(password)) {
-      alert('Password minimal 6 karakter, harus ada angka & simbol')
-      return
-    }
+    const isExist = users.find(u => u.email === email)
+    if (isExist) return alert('Email sudah terdaftar!')
 
-    const user = {
+    const newUser = {
       nama,
       email,
       password,
+      role: 'user' // default user
     }
 
-    localStorage.setItem('user', JSON.stringify(user))
+    users.push(newUser)
+    localStorage.setItem('users', JSON.stringify(users))
 
     alert('Daftar berhasil!')
-
     navigate('/login')
   }
 
@@ -62,7 +56,6 @@ export default function Register() {
 
       <Navbar />
 
-      {/* CONTENT */}
       <div className="flex items-center justify-center flex-1 py-20">
 
         <div className="bg-white w-[500px] rounded-[35px] px-12 py-14 shadow border">

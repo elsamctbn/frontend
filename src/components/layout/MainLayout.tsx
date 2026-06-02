@@ -1,27 +1,36 @@
-import { useState } from 'react'
-
-import {
-  Outlet,
-  useNavigate,
-} from 'react-router-dom'
-
-import Sidebar from '../admin/Sidebar'
+import { useState, useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
+import Sidebar from "../admin/Sidebar";
 
 export default function MainLayout() {
-
   const navigate = useNavigate()
 
-  const [showProfile, setShowProfile] =
-    useState(false)
+  const [showProfile, setShowProfile] = useState(false)
 
-  const handleLogout = () => {
+  useEffect(() => {
+  const isLoggedIn = localStorage.getItem('login') === 'true'
+  const role = localStorage.getItem('role')
 
-    localStorage.removeItem('login')
-
-    localStorage.removeItem('role')
-
+  if (!isLoggedIn || role !== 'admin') {
     navigate('/login')
   }
+}, [navigate])
+
+  const handleLogout = () => {
+  localStorage.removeItem('login')
+  localStorage.removeItem('role')
+
+  const totalLogout = Number(localStorage.getItem('totalLogout') || 0)
+
+  localStorage.setItem('totalLogout', String(totalLogout + 1))
+
+  localStorage.setItem(
+    'logoutMessage',
+    'Anda telah logout, silahkan login terlebih dahulu!'
+  )
+
+  navigate('/login')
+}
 
   return (
 

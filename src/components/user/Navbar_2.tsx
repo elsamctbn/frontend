@@ -1,16 +1,8 @@
 import { Link } from 'react-router-dom'
 
 import logo from '../../assets/logo.png'
-import Navbar_2 from './Navbar_2';
 
 const Navbar = () => {
-
-  const isLogin =
-    localStorage.getItem('login') === 'true'
-
-  if (isLogin) {
-    return <Navbar_2 />
-  }
 
   return (
 
@@ -27,11 +19,13 @@ const Navbar = () => {
             to='/'
             className="flex items-center"
           >
+
             <img
               src={logo}
               alt="Eldivo Logo"
               className="h-14 object-contain"
             />
+
           </Link>
 
           {/* MENU */}
@@ -42,7 +36,9 @@ const Navbar = () => {
               to='/'
               className='hover:text-yellow-300 transition duration-300'
             >
+
               Home
+
             </Link>
 
             {/* PESAN */}
@@ -50,7 +46,9 @@ const Navbar = () => {
               to='/search'
               className='hover:text-yellow-300 transition duration-300'
             >
+
               Pesan
+
             </Link>
 
             {/* TIKET */}
@@ -58,7 +56,9 @@ const Navbar = () => {
               to='/ticketsaya'
               className='hover:text-yellow-300 transition duration-300'
             >
+
               Tiket Saya
+
             </Link>
 
             {/* PROFILE */}
@@ -66,15 +66,9 @@ const Navbar = () => {
               to='/profile'
               className='hover:text-yellow-300 transition duration-300'
             >
-              Profil
-            </Link>
 
-            {/* LOGIN */}
-            <Link
-              to='/login'
-              className='hover:text-yellow-300 transition duration-300'
-            >
-              Login
+              Profil
+
             </Link>
 
           </div>

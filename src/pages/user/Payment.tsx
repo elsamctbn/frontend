@@ -44,8 +44,7 @@ export default function Payment() {
       ? 10000
       : 0
 
-  const totalPrice =
-    originalPrice - discount
+  const totalPrice = data?.totalPrice || 0
 
   useEffect(() => {
 
@@ -114,7 +113,7 @@ export default function Payment() {
       <Navbar />
 
       {/* CONTENT */}
-      <div className="max-w-7xl mx-auto py-14 px-4 whitespace-nowrap">
+      <div className="max-w-7xl mx-auto py-14 px-4">
 
         <div className="bg-white rounded-[35px] shadow-xl p-10">
 
@@ -123,17 +122,17 @@ export default function Payment() {
             Rincian Pemesanan
           </h1>
 
-          <div className="border-b mb-8"></div>
+          <div className="border-b-4 mb-8"></div>
 
           {/* CONTENT */}
-          <div className="grid grid-cols-2 gap-16 whitaspace-nowrap">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
             {/* KIRI */}
             <div className="space-y-6 text-xl">
 
-              <div className="flex">
+              <div className="flex flex-wrap gap-2">
 
-                <p className="w-52 font-semibold">
+                <p className="w-56 font-semibold">
                   Nama
                 </p>
 
@@ -143,9 +142,9 @@ export default function Payment() {
 
               </div>
 
-              <div className="flex">
+              <div className="flex flex-wrap gap-2">
 
-                <p className="w-52 font-semibold">
+                <p className="w-56 font-semibold">
                   E-Mail
                 </p>
 
@@ -155,9 +154,9 @@ export default function Payment() {
 
               </div>
 
-              <div className="flex">
+              <div className="flex flex-wrap gap-2">
 
-                <p className="w-52 font-semibold">
+                <p className="w-56 font-semibold">
                   No. Telp
                 </p>
 
@@ -167,9 +166,9 @@ export default function Payment() {
 
               </div>
 
-              <div className="flex">
+              <div className="flex flex-wrap gap-2">
 
-                <p className="w-52 font-semibold">
+                <p className="w-56 font-semibold">
                   Tanggal Lahir
                 </p>
 
@@ -184,7 +183,7 @@ export default function Payment() {
             {/* KANAN */}
             <div className="space-y-6 text-xl">
 
-              <div className="flex">
+              <div className="flex flex-wrap gap-2">
 
                 <p className="w-56 font-semibold">
                   Tanggal Keberangkatan
@@ -196,7 +195,7 @@ export default function Payment() {
 
               </div>
 
-              <div className="flex">
+              <div className="flex flex-wrap gap-2">
 
                 <p className="w-56 font-semibold">
                   Tujuan
@@ -210,7 +209,7 @@ export default function Payment() {
 
               </div>
 
-              <div className="flex">
+              <div className="flex flex-wrap gap-2">
 
                 <p className="w-56 font-semibold">
                   Jam
@@ -224,7 +223,7 @@ export default function Payment() {
 
               </div>
 
-              <div className="flex">
+              <div className="flex flex-wrap gap-2">
 
                 <p className="w-56 font-semibold">
                   Kursi
@@ -236,7 +235,7 @@ export default function Payment() {
 
               </div>
 
-              <div className="flex">
+              <div className="flex flex-wrap gap-2">
 
                 <p className="w-56 font-semibold">
                   Harga Awal
@@ -267,7 +266,7 @@ export default function Payment() {
               }
 
               {/* TOTAL */}
-              <div className="flex text-[#7B2CBF] font-bold text-3xl pt-3">
+              <div className="flex text-[#7B2CBF] font-bold text-3xl pt-3 flex-wrap gap-2">
 
                 <p className="w-56">
                   Total Bayar
@@ -473,12 +472,12 @@ export default function Payment() {
 
                 onClick={() => {
 
-                  // SAVE TICKET
-                  localStorage.setItem(
+                  const oldTickets = JSON.parse(
+                  localStorage.getItem('tickets') || '[]'
+                  )
 
-                    'ticketData',
-
-                    JSON.stringify({
+                   const newTicket = {
+                      orderId: 'ELD-' + Date.now(),
                       nama: data?.nama,
                       email: data?.email,
                       telepon: data?.telepon,
@@ -488,9 +487,14 @@ export default function Payment() {
                       totalPrice,
                       isStudent: data?.isStudent,
                       bus: selectedBus,
-                    })
-
+                    }
+                  
+                  oldTickets.push(newTicket)
+                  localStorage.setItem(
+                    'tickets',
+                    JSON.stringify(oldTickets)
                   )
+                  
                   navigate('/ticketsaya')
                 }}
 
