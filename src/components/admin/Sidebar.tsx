@@ -39,6 +39,11 @@ const Sidebar = () => {
       path: '/admin/laporan',
     },
 
+    {
+      name: 'Riwayat Reschedule',
+      path: '/admin/RiwayatReschedulePage',
+    },
+
   ]
 
   return (

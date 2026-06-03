@@ -107,7 +107,7 @@ console.log('TICKETS = ', tickets)
                 </td>
 
                 <td className='font-bold text-green-600'>
-                  Sudah Dibayar
+                  Dibayar
                 </td>
 
                 <td>

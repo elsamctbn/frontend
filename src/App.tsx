@@ -18,6 +18,7 @@ import DriverPage from './pages/admin/Driver/DriverPage'
 import RutePage from './pages/admin/Rute/RutePage' 
 import JadwalPage from './pages/admin/Jadwal/JadwalPage'
 import LaporanPage from './pages/admin/Bus/Laporan/LaporanPage'
+import RiwayatReschedule from './pages/admin/Bus/RiwayatReschedule/RiwayatReschedulePage'
 
 // ─── AUTH CONTEXT ────────────────────────────────────────────
 interface AuthContextType {
@@ -91,6 +92,8 @@ function AppRoutes() {
         <Route path="rute" element={<RutePage />} />
         <Route path="jadwal" element={<JadwalPage />} />
         <Route path="laporan" element={<LaporanPage />} />
+        <Route path="riwayatreschedule" element={<RiwayatReschedule/>} />
+
       </Route>
 
       {/* FALLBACK */}
