@@ -25,7 +25,7 @@ const Navbar = () => {
           {/* LOGO */}
           <Link
             to='/'
-            className="flex items-center"
+            className="flex items-center ml-5"
           >
             <img
               src={logo}
@@ -35,7 +35,7 @@ const Navbar = () => {
           </Link>
 
           {/* MENU */}
-          <div className="hidden md:flex items-center gap-10 text-xl font-semibold">
+          <div className="hidden md:flex items-center gap-12 text-xl font-semibold mr-5">
 
             {/* HOME */}
             <Link
