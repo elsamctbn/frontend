@@ -13,16 +13,16 @@ import {
 
 // ── Data dummy ──────────────────────────────────────────────────────────────
 const DUMMY_DATA = [
-  { kode: "PSN001", nama: "Raka Mahendra",  email: "raka@gmail.com",  rute: "Medan → Pekanbaru", tgl: "20 Jun 2026", jam: "08:00", kursi: "A1", harga: 250000, status: "Lunas" },
-  { kode: "PSN002", nama: "Andi Saputra",   email: "andi@gmail.com",  rute: "Medan → Pekanbaru", tgl: "20 Jun 2026", jam: "08:00", kursi: "B2", harga: 250000, status: "Lunas" },
-  { kode: "PSN003", nama: "Budi Santoso",   email: "budi@gmail.com",  rute: "Medan → Pekanbaru", tgl: "20 Jun 2026", jam: "08:00", kursi: "C3", harga: 250000, status: "Lunas" },
-  { kode: "PSN004", nama: "Siti Aisyah",    email: "siti@gmail.com",  rute: "Medan → Pekanbaru", tgl: "21 Jun 2026", jam: "09:00", kursi: "D4", harga: 250000, status: "Lunas" },
-  { kode: "PSN005", nama: "Dedi Kurniawan", email: "dedi@gmail.com",  rute: "Medan → Pekanbaru", tgl: "21 Jun 2026", jam: "09:00", kursi: "E1", harga: 250000, status: "Lunas" },
-  { kode: "PSN006", nama: "Lina Marlina",   email: "lina@gmail.com",  rute: "Medan → Pekanbaru", tgl: "21 Jun 2026", jam: "09:00", kursi: "A2", harga: 250000, status: "Menunggu" },
-  { kode: "PSN007", nama: "Rizky Pratama",  email: "rizky@gmail.com", rute: "Medan → Pekanbaru", tgl: "22 Jun 2026", jam: "10:00", kursi: "B1", harga: 250000, status: "Lunas" },
+  { kode: "PSN001", nama: "Raka Mahendra",  email: "raka@gmail.com",  rute: "Medan → Pekanbaru", tgl: "20 Jun 2026", jam: "08:00", kursi: "A1", harga: 250000, status: "Dibayar" },
+  { kode: "PSN002", nama: "Andi Saputra",   email: "andi@gmail.com",  rute: "Medan → Pekanbaru", tgl: "20 Jun 2026", jam: "08:00", kursi: "B2", harga: 250000, status: "Dibayar" },
+  { kode: "PSN003", nama: "Budi Santoso",   email: "budi@gmail.com",  rute: "Medan → Pekanbaru", tgl: "20 Jun 2026", jam: "08:00", kursi: "C3", harga: 250000, status: "Dibayar" },
+  { kode: "PSN004", nama: "Siti Aisyah",    email: "siti@gmail.com",  rute: "Medan → Pekanbaru", tgl: "21 Jun 2026", jam: "09:00", kursi: "D4", harga: 250000, status: "Dibayar" },
+  { kode: "PSN005", nama: "Dedi Kurniawan", email: "dedi@gmail.com",  rute: "Medan → Pekanbaru", tgl: "21 Jun 2026", jam: "09:00", kursi: "E1", harga: 250000, status: "Dibayar" },
+  { kode: "PSN006", nama: "Lina Marlina",   email: "lina@gmail.com",  rute: "Medan → Pekanbaru", tgl: "21 Jun 2026", jam: "09:00", kursi: "A2", harga: 250000, status: "Pending" },
+  { kode: "PSN007", nama: "Rizky Pratama",  email: "rizky@gmail.com", rute: "Medan → Pekanbaru", tgl: "22 Jun 2026", jam: "10:00", kursi: "B1", harga: 250000, status: "Dibayar" },
   { kode: "PSN008", nama: "Wahyu Setiawan", email: "wahyu@gmail.com", rute: "Medan → Pekanbaru", tgl: "22 Jun 2026", jam: "10:00", kursi: "C2", harga: 250000, status: "Dibatalkan" },
-  { kode: "PSN009", nama: "Nanda Putri",    email: "nanda@gmail.com", rute: "Medan → Pekanbaru", tgl: "23 Jun 2026", jam: "11:00", kursi: "D1", harga: 250000, status: "Lunas" },
-  { kode: "PSN010", nama: "Fajar Nugroho",  email: "fajar@gmail.com", rute: "Medan → Pekanbaru", tgl: "23 Jun 2026", jam: "11:00", kursi: "E3", harga: 250000, status: "Lunas" },
+  { kode: "PSN009", nama: "Nanda Putri",    email: "nanda@gmail.com", rute: "Medan → Pekanbaru", tgl: "23 Jun 2026", jam: "11:00", kursi: "D1", harga: 250000, status: "Dibayar" },
+  { kode: "PSN010", nama: "Fajar Nugroho",  email: "fajar@gmail.com", rute: "Medan → Pekanbaru", tgl: "23 Jun 2026", jam: "11:00", kursi: "E3", harga: 250000, status: "Dibayar" },
 ];
 
 const PAGE_SIZE = 10;
@@ -32,8 +32,8 @@ const formatRupiah = (n) =>
   "Rp " + n.toLocaleString("id-ID");
 
 const statusStyle = {
-  Lunas:      "bg-green-100 text-green-800",
-  Menunggu:   "bg-amber-100 text-amber-800",
+  Dibayar:      "bg-green-100 text-green-800",
+  Pending:   "bg-amber-100 text-amber-800",
   Dibatalkan: "bg-red-100 text-red-700",
 };
 
@@ -124,8 +124,8 @@ export default function RiwayatPenjualan() {
             className="text-sm border border-gray-200 rounded-lg px-3 py-1.5 text-gray-800 focus:outline-none focus:border-blue-400"
           >
             <option value="">Semua Status</option>
-            <option value="Lunas">Lunas</option>
-            <option value="Menunggu">Menunggu</option>
+            <option value="Dibayar">Dibayar</option>
+            <option value="Pending">Pending</option>
             <option value="Dibatalkan">Dibatalkan</option>
           </select>
         </div>
