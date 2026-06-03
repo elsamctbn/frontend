@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import Navbar_2 from '../../components/user/Navbar_2'
+import RescheduleModal from './Reschedule'
 
 export default function TicketDetail() {
   const location = useLocation()
@@ -20,8 +21,18 @@ export default function TicketDetail() {
 
   const [showReschedule, setShowReschedule] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
-  const [selectedDate, setSelectedDate] = useState('')
-  const [selectedSeat, setSelectedSeat] = useState('')
+
+  const handleRescheduleSave = (newDate: string, newSeat: string) => {
+    const updated = {
+      ...ticketData,
+      tanggal: newDate || ticketData?.tanggal,
+      kursi: newSeat || ticketData?.kursi,
+    }
+    localStorage.setItem('ticketData', JSON.stringify(updated))
+    setTicketData(updated)
+    setShowReschedule(false)
+    setShowSuccess(true)
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
@@ -29,7 +40,7 @@ export default function TicketDetail() {
 
       <div className="max-w-3xl mx-auto py-10 px-4">
 
-        {/* ── ACTION BUTTONS (no-print) ── */}
+        {/* ACTION BUTTONS */}
         <div className="flex justify-between mb-4 no-print">
           <button
             onClick={() => navigate('/ticketsaya')}
@@ -53,7 +64,7 @@ export default function TicketDetail() {
           </div>
         </div>
 
-        {/* ── TICKET DOCUMENT ── */}
+        {/* TICKET DOCUMENT */}
         <div className="print-ticket bg-white shadow-md rounded-md overflow-hidden border border-gray-200">
 
           {/* Header */}
@@ -62,10 +73,7 @@ export default function TicketDetail() {
               <p className="text-2xl font-bold text-[#7B2CBF] tracking-tight">E-Tiket Bus</p>
               <p className="text-xs text-gray-500 mt-0.5">ELDIVO TRANSPORT</p>
             </div>
-            {/* Logo placeholder — swap src with your real logo */}
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-black text-[#7B2CBF] tracking-tighter">eldivo</span>
-            </div>
+            <span className="text-2xl font-black text-[#7B2CBF] tracking-tighter">eldivo</span>
           </div>
 
           {/* Payment info row */}
@@ -80,22 +88,13 @@ export default function TicketDetail() {
             </div>
           </div>
 
-          {/* Detail rincian box */}
+          {/* Rincian box */}
           <div className="mx-8 my-5 border border-gray-300 rounded-md overflow-hidden">
-            {/* Blue header strip */}
-            <div className="bg-[#7B2CBF] text-white text-sm font-semibold px-4 py-2">
-              Rincian
-            </div>
+            <div className="bg-[#7B2CBF] text-white text-sm font-semibold px-4 py-2">Rincian</div>
             <div className="p-4">
-              {/* Bus name / kelas */}
-              <p className="font-bold text-gray-800 text-base">
-                {bus?.name || 'ELDIVO EXPRESS'}
-              </p>
-              <p className="text-sm text-gray-500 mb-3">
-                {bus?.class || 'EKONOMI'}
-              </p>
+              <p className="font-bold text-gray-800 text-base">{bus?.name || 'ELDIVO EXPRESS'}</p>
+              <p className="text-sm text-gray-500 mb-3">{bus?.class || 'EKONOMI'}</p>
 
-              {/* Operator */}
               <div className="flex justify-between items-start mb-2">
                 <div>
                   <p className="text-sm font-semibold text-gray-700">PT Eldivo Transport</p>
@@ -106,7 +105,6 @@ export default function TicketDetail() {
 
               <hr className="my-3 border-gray-200" />
 
-              {/* Penumpang */}
               <div className="flex justify-between text-sm">
                 <div>
                   <p className="text-gray-500 text-xs mb-0.5">Penumpang</p>
@@ -125,7 +123,6 @@ export default function TicketDetail() {
 
               <hr className="my-3 border-gray-200" />
 
-              {/* Total */}
               <div className="flex justify-between text-sm font-bold">
                 <p>Total Pembayaran</p>
                 <p className="text-[#7B2CBF] text-base">
@@ -136,7 +133,7 @@ export default function TicketDetail() {
             </div>
           </div>
 
-          {/* Kode Pemesanan + Barcode */}
+          {/* Kode Pemesanan + QR */}
           <div className="grid grid-cols-2 items-center px-8 py-5 border-t border-gray-200">
             <div>
               <p className="text-sm text-gray-500 mb-1">Kode Pemesanan</p>
@@ -146,19 +143,19 @@ export default function TicketDetail() {
             </div>
             <div className="flex justify-end">
               <img
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${ticketData?.orderId || 'ELDIVO'}&format=png`}
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${ticketData?.orderId || 'ELDIVO'}`}
                 alt="QR Code"
                 className="w-28 h-28"
               />
             </div>
           </div>
 
-          {/* Pemesanan section */}
+          {/* Pemesanan */}
           <div className="px-8 py-4 border-t border-gray-200">
             <p className="text-base font-bold text-gray-800 mb-3">Pemesanan</p>
             <div className="grid grid-cols-2 gap-y-2 text-sm">
               <InfoRow label="Nama" value={ticketData?.nama} />
-              <InfoRow label="No. Telepon" value={ticketData?.phone || '-'} />
+              <InfoRow label="No. Telepon" value={ticketData?.telepon || '-'} />
               <InfoRow label="Email" value={ticketData?.email || '-'} />
               <InfoRow label="Tanggal Pesan" value={ticketData?.tanggal} />
               <InfoRow label="Pemesanan Melalui" value="Eldivo Web" />
@@ -180,30 +177,21 @@ export default function TicketDetail() {
                 </thead>
                 <tbody>
                   <tr className="border-t border-gray-200">
-                    <td className="px-4 py-3 font-medium text-gray-800">
-                      {bus?.name || 'ELDIVO EXPRESS'}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">
-                      {bus?.class || 'Ekonomi'}
-                    </td>
+                    <td className="px-4 py-3 font-medium text-gray-800">{bus?.name || 'ELDIVO EXPRESS'}</td>
+                    <td className="px-4 py-3 text-gray-600">{bus?.class || 'Ekonomi'}</td>
                     <td className="px-4 py-3 text-gray-700">
                       {bus?.from} ({bus?.fromCode || 'DEP'})<br />
-                      <span className="text-xs text-gray-500">
-                        {ticketData?.tanggal}, {bus?.fromTime}
-                      </span>
+                      <span className="text-xs text-gray-500">{ticketData?.tanggal}, {bus?.fromTime}</span>
                     </td>
                     <td className="px-4 py-3 text-gray-700">
                       {bus?.to} ({bus?.toCode || 'ARR'})<br />
-                      <span className="text-xs text-gray-500">
-                        {ticketData?.tanggal}, {bus?.toTime}
-                      </span>
+                      <span className="text-xs text-gray-500">{ticketData?.tanggal}, {bus?.toTime}</span>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            {/* Catatan */}
             <div className="mt-4 text-xs text-gray-500 space-y-1">
               <p>• Tunjukkan QR Code atau kode pemesanan saat boarding.</p>
               <p>• Harap tiba 15 menit sebelum keberangkatan.</p>
@@ -211,69 +199,25 @@ export default function TicketDetail() {
             </div>
           </div>
 
-        </div>{/* end print-ticket */}
+        </div>
       </div>
 
-      {/* ── MODAL RESCHEDULE ── */}
+      {/* RESCHEDULE MODAL */}
       {showReschedule && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-2xl w-[500px] shadow-xl">
-            <h2 className="text-xl font-bold mb-4 text-gray-800">Reschedule Tiket</h2>
-
-            <label className="block text-sm text-gray-600 mb-1">Tanggal Baru</label>
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              className="w-full border border-gray-300 p-3 rounded-xl mb-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#7B2CBF]"
-            />
-
-            <label className="block text-sm text-gray-600 mb-1">Nomor Kursi</label>
-            <input
-              type="text"
-              placeholder="Contoh: 12A"
-              value={selectedSeat}
-              onChange={(e) => setSelectedSeat(e.target.value)}
-              className="w-full border border-gray-300 p-3 rounded-xl mb-6 text-sm focus:outline-none focus:ring-2 focus:ring-[#7B2CBF]"
-            />
-
-            <div className="flex justify-end gap-3">
-              <button
-                onClick={() => setShowReschedule(false)}
-                className="px-5 py-2 border border-gray-300 rounded-xl text-sm text-gray-600 hover:bg-gray-50"
-              >
-                Batal
-              </button>
-              <button
-                onClick={() => {
-                  const updated = {
-                    ...ticketData,
-                    tanggal: selectedDate || ticketData?.tanggal,
-                    kursi: selectedSeat || ticketData?.kursi,
-                  }
-                  localStorage.setItem('ticketData', JSON.stringify(updated))
-                  setTicketData(updated)
-                  setShowReschedule(false)
-                  setShowSuccess(true)
-                }}
-                className="bg-orange-500 text-white px-5 py-2 rounded-xl text-sm hover:bg-orange-600"
-              >
-                Simpan Perubahan
-              </button>
-            </div>
-          </div>
-        </div>
+        <RescheduleModal
+          ticketData={ticketData}
+          onClose={() => setShowReschedule(false)}
+          onSave={handleRescheduleSave}
+        />
       )}
 
-      {/* ── MODAL SUCCESS ── */}
+      {/* SUCCESS MODAL */}
       {showSuccess && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-2xl w-80 text-center shadow-xl">
             <div className="text-5xl mb-3">✅</div>
             <h2 className="text-xl font-bold mb-2 text-gray-800">Reschedule Berhasil</h2>
-            <p className="text-sm text-gray-500 mb-5">
-              Tiket Anda telah diperbarui.
-            </p>
+            <p className="text-sm text-gray-500 mb-5">Tiket Anda telah diperbarui.</p>
             <button
               onClick={() => setShowSuccess(false)}
               className="bg-[#7B2CBF] text-white px-6 py-2 rounded-xl text-sm hover:bg-[#6a22a8]"
@@ -284,7 +228,6 @@ export default function TicketDetail() {
         </div>
       )}
 
-      {/* ── PRINT STYLES ── */}
       <style>{`
         @media print {
           .no-print { display: none !important; }
@@ -296,7 +239,6 @@ export default function TicketDetail() {
   )
 }
 
-// Helper component
 function InfoRow({ label, value }: { label: string; value?: string }) {
   return (
     <div className="flex gap-2">
